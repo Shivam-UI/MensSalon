@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Saloon</string>
+    <string name="splash_word">be pampered..</string>
+    <string name="number_hint">mobile number</string>
+    <string name="otp_hint">Enter OTP</string>
+    <string name="submit_btn">Confirm</string>
+    <string name="submit_resend_otp">Resend OTP</string>
+    <string name="about_us">Awesome Pick For You</string>
+    <string name="bottom_now">now</string>
+    <string name="bottom_later">later</string>
+    <string name="txt_profile">Profile</string>
+    <string name="txt_history">History</string>
+    <string name="txt_talk_to_us">Talk to us</string>
+    <string name="txt_faqs">FAQs</string>
+    <string name="txt_spendgenie">Spendgenie</string>
+    <string name="txt_preferences">Preferences</string>
+    <string name="txt_profile_btm_text">Privacy is Priority</string>
+    <!-- profile string -->
+    <string name="txt_name">Full Name</string>
+    <string name="txt_bday">Birthday</string>
+    <string name="txt_anniversary">Anniversary</string>
+    <string name="txt_partener_bday">Partner Birthday</string>
+    <string name="txt_papa_bday">Papa Birthday</string>
+    <string name="txt_mumma_bday">Mumma Birthday</string>
+    <!-- alert string -->
+    <string name="txt_ok">Ok</string>
+    <string name="txt_cancel">Cancel</string>
+</resources>
