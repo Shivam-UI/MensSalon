@@ -19,6 +19,8 @@ import com.createdinam.saloon.NumberActivity;
 import com.createdinam.saloon.R;
 import com.createdinam.saloon.global.CustomLoader;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.createdinam.saloon.global.Global.MY_PREFS_NAME;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
@@ -28,7 +30,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private static CustomLoader customLoader;
     // assign
     TextView btn_profile,btn_history,btn_talk_to_us,btn_faqs,btn_spendgenie,btn_preference;
-    ImageView logout_btn,update_profile_image,back_to_home;
+    ImageView logout_btn,back_to_home;
+    CircleImageView update_profile_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

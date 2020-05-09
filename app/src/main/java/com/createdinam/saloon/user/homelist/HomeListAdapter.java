@@ -1,6 +1,10 @@
 package com.createdinam.saloon.user.homelist;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.createdinam.saloon.R;
 import com.createdinam.saloon.user.HomeListModel;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.net.URI;
 import java.util.ArrayList;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListHolder> {
@@ -45,7 +54,14 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
         String simage = mHlist.get(position).getImage();
         String srating = mHlist.get(position).getRating();
 
-        Log.d("discount",""+sdiscount);
+
+        Log.d("rating",""+srating);
+        String[] images = simage.split(",");
+        for(String imag: images){
+            //Log.d("images",""+imag);
+            Uri uri = Uri.parse(imag);
+            setFlipperImage(uri,holder.salon_slider);
+        }
 
         // set value
         if(sdiscount.trim().matches("")){
@@ -58,6 +74,16 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
         holder.sal_discount.setText("Discount "+sdiscount);
         holder.sal_distnc.setText(sdistance);
         holder.sal_rating.setNumStars(Integer.parseInt(srating));
+
+        holder.salon_slider.setAutoStart(true);
+        holder.salon_slider.setFlipInterval(4000);
+    }
+
+    private void setFlipperImage(Uri res, ViewFlipper mv) {
+        Log.i("Set Filpper Called", res+"");
+        ImageView image = new ImageView(mContext.getApplicationContext());
+        image.setImageURI(res);
+        mv.addView(image);
     }
 
     @Override
@@ -66,12 +92,12 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
     }
 
     public class HListHolder extends RecyclerView.ViewHolder{
-        ImageView sal_img;
+        ViewFlipper salon_slider;
         TextView sal_name,sal_distnc,sal_add,sal_discount;
         RatingBar sal_rating;
         public HListHolder(@NonNull View itemView) {
             super(itemView);
-            sal_img = itemView.findViewById(R.id.salon_image);
+            salon_slider = itemView.findViewById(R.id.salon_slider);
             sal_name = itemView.findViewById(R.id.salon_name);
             sal_discount = itemView.findViewById(R.id.salon_discount);
             sal_rating = itemView.findViewById(R.id.salon_rating);

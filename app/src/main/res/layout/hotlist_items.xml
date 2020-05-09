@@ -5,25 +5,32 @@
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="2">
 
-    <ImageView
-        android:id="@+id/hot_list_image"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_weight=".5"
-        android:src="@drawable/saloon_loder_bg" />
+        android:layout_height="160dp"
+        android:layout_weight="1"
+        android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/hot_list_name"
-        android:layout_weight=".5"
-        style="@style/TextAppearance.AppCompat.Title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="-30dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="@string/app_name"
-        android:textColor="@color/text_button_color"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/hot_list_image"
+            android:layout_width="220dp"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/saloon_loder_bg" />
+
+        <TextView
+            android:id="@+id/hot_list_name"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-30dp"
+            android:layout_weight=".5"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/app_name"
+            android:textColor="@color/text_button_color"
+            android:visibility="gone" />
+    </RelativeLayout>
 </LinearLayout>
