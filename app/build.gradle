@@ -41,4 +41,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     // glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    // slider lib
+    implementation 'com.ouattararomuald:slider:3.0.1'
+    // picaso lib
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }

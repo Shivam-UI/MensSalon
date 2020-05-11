@@ -16,21 +16,23 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.createdinam.saloon.R;
+import com.createdinam.saloon.global.GlobalAppContextSingleton;
 import com.createdinam.saloon.user.HomeListModel;
+import com.createdinam.saloon.user.UserHomeActivity;
+import com.ouattararomuald.slider.ImageSlider;
+import com.ouattararomuald.slider.SliderAdapter;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.URI;
 import java.util.ArrayList;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListHolder> {
-
+    ViewPagerSlider mViewPagerSlider;
     ArrayList<HomeListModel> mHlist = new ArrayList<HomeListModel>();
     Context mContext;
-
+    private static final String TAG = "HomeListAdapter";
     public HomeListAdapter(ArrayList<HomeListModel> mHlist, Context mContext) {
         this.mHlist = mHlist;
         this.mContext = mContext;
@@ -54,14 +56,15 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
         String simage = mHlist.get(position).getImage();
         String srating = mHlist.get(position).getRating();
 
-
         Log.d("rating",""+srating);
         String[] images = simage.split(",");
-        for(String imag: images){
-            //Log.d("images",""+imag);
-            Uri uri = Uri.parse(imag);
-            setFlipperImage(uri,holder.salon_slider);
+        String[] ListImagesSlider;
+        for (String SliderImages: images){
+            SliderImages.replaceAll("\\s"," ");
+            Log.d(TAG, "onBindViewHolder: "+SliderImages);
         }
+
+        mViewPagerSlider = new ViewPagerSlider(mContext,images);
 
         // set value
         if(sdiscount.trim().matches("")){
@@ -73,10 +76,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
         holder.sal_add.setText(sadd);
         holder.sal_discount.setText("Discount "+sdiscount);
         holder.sal_distnc.setText(sdistance);
-        holder.sal_rating.setNumStars(Integer.parseInt(srating));
-
-        holder.salon_slider.setAutoStart(true);
-        holder.salon_slider.setFlipInterval(4000);
+        holder.sal_rating.setRating(Integer.parseInt(srating));
+        holder.salon_slider.setAdapter(mViewPagerSlider);
     }
 
     private void setFlipperImage(Uri res, ViewFlipper mv) {
@@ -92,7 +93,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
     }
 
     public class HListHolder extends RecyclerView.ViewHolder{
-        ViewFlipper salon_slider;
+        ViewPager salon_slider;
         TextView sal_name,sal_distnc,sal_add,sal_discount;
         RatingBar sal_rating;
         public HListHolder(@NonNull View itemView) {
