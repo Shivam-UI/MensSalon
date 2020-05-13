@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:fontFamily="@font/montserrat_bold"
             android:text="@string/bottom_now"
             android:textColor="@color/text_color"
             android:textSize="20sp"
@@ -56,14 +57,34 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/img_home"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/home_btn_icon" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_home_list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight=".7"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
             android:id="@+id/img_list"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/list_icon" />
+            android:src="@drawable/list_icon"
+            android:visibility="gone"/>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/btn_lay_later"
         android:layout_width="wrap_content"
@@ -78,6 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:fontFamily="@font/montserrat_bold"
             android:text="@string/bottom_later"
             android:textColor="@color/text_color"
             android:textSize="20sp"

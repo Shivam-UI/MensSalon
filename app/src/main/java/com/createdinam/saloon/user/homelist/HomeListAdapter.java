@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -23,6 +25,7 @@ import com.createdinam.saloon.R;
 import com.createdinam.saloon.global.GlobalAppContextSingleton;
 import com.createdinam.saloon.user.HomeListModel;
 import com.createdinam.saloon.user.UserHomeActivity;
+import com.daman.library.SimpleRatingBar;
 import com.ouattararomuald.slider.ImageSlider;
 import com.ouattararomuald.slider.SliderAdapter;
 
@@ -56,35 +59,31 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
         String simage = mHlist.get(position).getImage();
         String srating = mHlist.get(position).getRating();
 
-        Log.d("rating",""+srating);
-        String[] images = simage.split(",");
-        String[] ListImagesSlider;
-        for (String SliderImages: images){
-            SliderImages.replaceAll("\\s"," ");
-            Log.d(TAG, "onBindViewHolder: "+SliderImages);
+        String[] images = simage.split(", ");
+        String url = "";
+        ArrayList<String> ListImagesSlider = new ArrayList<String>();
+        for (int i = 0;i< images.length;i++){
+            url = images[i].replaceAll("\\s","%20");
+            Log.d("URL",""+url);
+            ListImagesSlider.add(url);
         }
 
-        mViewPagerSlider = new ViewPagerSlider(mContext,images);
+        mViewPagerSlider = new ViewPagerSlider(mContext,images,ListImagesSlider);
 
         // set value
         if(sdiscount.trim().matches("")){
             sdiscount = "0%";
+            holder.sal_discount.setText("Discount "+sdiscount);
+        }else{
+            holder.sal_discount.setText("Discount Upto "+sdiscount);
         }
 
         // set data
         holder.sal_name.setText(sname);
         holder.sal_add.setText(sadd);
-        holder.sal_discount.setText("Discount "+sdiscount);
         holder.sal_distnc.setText(sdistance);
         holder.sal_rating.setRating(Integer.parseInt(srating));
         holder.salon_slider.setAdapter(mViewPagerSlider);
-    }
-
-    private void setFlipperImage(Uri res, ViewFlipper mv) {
-        Log.i("Set Filpper Called", res+"");
-        ImageView image = new ImageView(mContext.getApplicationContext());
-        image.setImageURI(res);
-        mv.addView(image);
     }
 
     @Override
@@ -104,6 +103,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
             sal_rating = itemView.findViewById(R.id.salon_rating);
             sal_add = itemView.findViewById(R.id.salon_address);
             sal_distnc = itemView.findViewById(R.id.saloon_distance);
+            sal_rating.setNumStars(5);
         }
     }
 }

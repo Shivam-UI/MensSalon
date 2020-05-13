@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +25,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +42,7 @@ import com.createdinam.saloon.global.CustomLoader;
 import com.createdinam.saloon.global.InitFunction;
 import com.createdinam.saloon.user.homelist.HomeListAdapter;
 import com.createdinam.saloon.user.homelist.HotListAdapter;
+import com.createdinam.saloon.user.nowlist.NowListActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,6 +52,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
 import static com.createdinam.saloon.R.id.home_salon_list_view;
 import static com.createdinam.saloon.global.Global.MY_PREFS_NAME;
 import static com.createdinam.saloon.global.Global.Saloon_Hot_deal_List;
@@ -65,7 +70,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
     SharedPreferences prefs;
     RequestQueue requestQueue;
     // bottom navigation res
-    RelativeLayout btn_lay_now, btn_lay_map, btn_lay_list, btn_lay_later;
+    RelativeLayout btn_lay_now, btn_lay_map, btn_lay_list, btn_lay_later,btn_home_list;
     // top navigation
     ImageView back_button;
     // location init
@@ -89,7 +94,8 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
             Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_top));
+            //window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_top));
+            window.setStatusBarColor(Color.TRANSPARENT);
         }
         USER_ID = prefs.getString("user_id", "");
         // list init
@@ -101,6 +107,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
         btn_lay_map = findViewById(R.id.btn_lay_map);
         btn_lay_list = findViewById(R.id.btn_lay_list);
         btn_lay_later = findViewById(R.id.btn_lay_later);
+        btn_home_list = findViewById(R.id.btn_home_list);
         // bind click listener
         back_button.setOnClickListener(this);
         btn_lay_now.setOnClickListener(this);
@@ -277,7 +284,8 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setNowView() {
-        Toast.makeText(this, "Now", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(UserHomeActivity.this, NowListActivity.class));
+        finish();
     }
 
     private void setProfileView() {

@@ -3,7 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#232323</color>
-    <color name="status_bar_top">#FFFFFF</color>
+    <color name="status_bar_top">#7FFFFFFF</color>
     <color name="text_color">#FFFFFF</color>
     <color name="black">#232323</color>
     <color name="text_button_color">#232323</color>
@@ -11,4 +11,6 @@
     <color name="alert_background">#00FFFFFF</color>
     <color name="resend_code_btn">#BFFFFFFF</color>
     <color name="colorGoogle">@android:color/holo_red_dark</color>
+    <color name="color_star_background">#4C292929</color>
+    <color name="discount_text">#FF3B30</color>
 </resources>

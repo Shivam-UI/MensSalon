@@ -20,7 +20,10 @@ public class Global {
 
     public static final String Update_profile = "http://bizhawkzdemo.com/salon_app/update_profile.php";
 
-    /*<------------------------------------------- Saloon list --------------------------------------------------------->*/
+    /*<------------------------------------------- Saloon User Home list --------------------------------------------------------->*/
     public static final String Saloon_list = "http://bizhawkzdemo.com/salon_app/salon_list.php";
     public static final String Saloon_Hot_deal_List = "http://bizhawkzdemo.com/salon_app/salon_hotdeal_list.php";
+
+    /*<------------------------------------------- Saloon Now list --------------------------------------------------------->*/
+    public static final String Saloon_Now_List = "http://bizhawkzdemo.com/salon_app/salon_now_list.php";
 }

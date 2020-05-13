@@ -262,6 +262,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                     return param;
                 }
             };
+            requestQueue.add(profile_update);
         } else {
             customLoader.stopLoadingDailog();
         }

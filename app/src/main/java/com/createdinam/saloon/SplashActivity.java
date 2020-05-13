@@ -21,7 +21,7 @@ import com.createdinam.saloon.user.UserHomeActivity;
 import static com.createdinam.saloon.global.Global.MY_PREFS_NAME;
 
 public class SplashActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 5000;
+    private static int SPLASH_TIME_OUT = 3000;
     SharedPreferences.Editor editor;
     SharedPreferences prefs;
 
