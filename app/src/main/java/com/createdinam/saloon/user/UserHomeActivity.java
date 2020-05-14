@@ -42,6 +42,7 @@ import com.createdinam.saloon.global.CustomLoader;
 import com.createdinam.saloon.global.InitFunction;
 import com.createdinam.saloon.user.homelist.HomeListAdapter;
 import com.createdinam.saloon.user.homelist.HotListAdapter;
+import com.createdinam.saloon.user.laterlist.LaterBookingList;
 import com.createdinam.saloon.user.nowlist.NowListActivity;
 
 import org.json.JSONArray;
@@ -272,7 +273,8 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setLaterView() {
-        Toast.makeText(this, "Later", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(UserHomeActivity.this, LaterBookingList.class));
+        finish();
     }
 
     private void setMapView() {

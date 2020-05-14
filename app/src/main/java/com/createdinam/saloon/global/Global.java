@@ -2,7 +2,6 @@ package com.createdinam.saloon.global;
 
 public class Global {
 
-
     /*<------------------------------------------- ACCESS TOKEN --------------------------------------------------------->*/
     public static final String access_token = "0253c4a012e0d32bc73b0ad2a2832762";
 
@@ -26,4 +25,7 @@ public class Global {
 
     /*<------------------------------------------- Saloon Now list --------------------------------------------------------->*/
     public static final String Saloon_Now_List = "http://bizhawkzdemo.com/salon_app/salon_now_list.php";
+
+    /*<------------------------------------------- Saloon Later list --------------------------------------------------------->*/
+    public static final String Saloon_Later_List = "http://bizhawkzdemo.com/salon_app/salon_later_list.php";
 }

@@ -1,4 +1,4 @@
-package com.createdinam.saloon.user.nowlist;
+package com.createdinam.saloon.user.laterlist;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,7 +31,9 @@ import com.createdinam.saloon.global.Global;
 import com.createdinam.saloon.global.InitFunction;
 import com.createdinam.saloon.user.ProfileActivity;
 import com.createdinam.saloon.user.UserHomeActivity;
-import com.createdinam.saloon.user.laterlist.LaterBookingList;
+import com.createdinam.saloon.user.laterlist.model.LaterModel;
+import com.createdinam.saloon.user.laterlist.model.LaterSalonAdapter;
+import com.createdinam.saloon.user.nowlist.NowListActivity;
 import com.createdinam.saloon.user.nowlist.model.NowModel;
 import com.createdinam.saloon.user.nowlist.model.NowSalonAdapter;
 
@@ -42,11 +44,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.createdinam.saloon.R.id.home_salon_list_view;
 import static com.createdinam.saloon.global.Global.MY_PREFS_NAME;
 
-public class NowListActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class LaterBookingList extends AppCompatActivity implements View.OnClickListener {
     private static String USER_ID;
     private static CustomLoader customLoader;
     SharedPreferences.Editor editor;
@@ -58,16 +58,16 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
     ImageView back_button;
     TextView logo_imageView,txt_later,txt_now;
     // recycler view items
-    RecyclerView ry_now_list_items;
+    RecyclerView book_later_list;
     // save data to ArrayList
-    private ArrayList<NowModel> NowListDB = new ArrayList<NowModel>();
+    private ArrayList<LaterModel> LaterBookingL = new ArrayList<LaterModel>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_now_list);
+        setContentView(R.layout.activity_later_booking_list);
         prefs = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         editor = prefs.edit();
-        customLoader = new CustomLoader(NowListActivity.this);
+        customLoader = new CustomLoader(LaterBookingList.this);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         if (Build.VERSION.SDK_INT >= 21) {
             Window window = this.getWindow();
@@ -78,10 +78,10 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
         }
         USER_ID = prefs.getString("user_id", "");
         // inti list
-        ry_now_list_items = findViewById(R.id.ry_now_list_items);
+        book_later_list = findViewById(R.id.book_later_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        ry_now_list_items.setLayoutManager(layoutManager);
-        ry_now_list_items.setHasFixedSize(true);
+        book_later_list.setLayoutManager(layoutManager);
+        book_later_list.setHasFixedSize(true);
         // init other layout component
         back_button = findViewById(R.id.back_button);
         btn_lay_now = findViewById(R.id.btn_lay_now);
@@ -99,13 +99,15 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
         btn_lay_list.setOnClickListener(this);
         btn_lay_later.setOnClickListener(this);
         // set UI update
-        btn_lay_now.setBackgroundColor(Color.GRAY);
-        logo_imageView.setText("Hmm Are you ready");
+        btn_lay_later.setBackgroundColor(Color.GRAY);
+        logo_imageView.setText("Umm. May be later");
         txt_now.setText("Book Now");
         txt_later.setText("Book Later");
-        if (InitFunction.getInstance(getApplicationContext()).isNetworkAvaliable(NowListActivity.this)) {
+
+        if (InitFunction.getInstance(getApplicationContext()).isNetworkAvaliable(LaterBookingList.this)) {
             customLoader.startLoadingDailog();
-            setNowListView();
+            // start method for list
+            setLaterBookingList();
         } else {
             Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
         }
@@ -133,8 +135,7 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setLaterView() {
-        startActivity(new Intent(NowListActivity.this, LaterBookingList.class));
-        finish();
+        Toast.makeText(this, "Later", Toast.LENGTH_SHORT).show();
     }
 
     private void setMapView() {
@@ -142,16 +143,17 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setListView() {
-        startActivity(new Intent(NowListActivity.this,UserHomeActivity.class));
+        startActivity(new Intent(LaterBookingList.this, UserHomeActivity.class));
         finish();
     }
 
     private void setNowView() {
-
+        startActivity(new Intent(LaterBookingList.this,NowListActivity.class));
+        finish();
     }
 
-    private void setNowListView(){
-        StringRequest nowListRequest = new StringRequest(Request.Method.POST, Global.Saloon_Now_List, new Response.Listener<String>() {
+    private void setLaterBookingList(){
+        StringRequest nowListRequest = new StringRequest(Request.Method.POST, Global.Saloon_Later_List, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JSONObject obj = null;
@@ -167,26 +169,27 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
                     if (obj.getString("status").matches("true")) {
                         JSONArray homelist = obj.getJSONArray("data");
                         for (int i = 0; i < homelist.length(); i++) {
-                            NowModel nowModel = new NowModel();
+                            LaterModel laterModel = new LaterModel();
                             JSONObject listObj = homelist.getJSONObject(i);
-                            nowModel.setSalon_id(listObj.getString("salon_id"));
-                            nowModel.setSalon_unique_id(listObj.getString("salon_unique_id"));
-                            nowModel.setSalon_name(listObj.getString("salon_name"));
-                            nowModel.setImage(listObj.getString("image"));
-                            nowModel.setDiscount(listObj.getString("discount"));
-                            nowModel.setRating(listObj.getString("rating"));
-                            nowModel.setAddress(listObj.getString("address"));
-                            nowModel.setLatitude(listObj.getString("latitude"));
-                            nowModel.setLongitude(listObj.getString("longitude"));
-                            nowModel.setAvailability(listObj.getString("availability"));
-                            nowModel.setDistance(listObj.getString("distance"));
-                            nowModel.setFeatured_flag(listObj.getString("featured_flag"));
-                            NowListDB.add(nowModel);
+                            laterModel.setSalon_id(listObj.getString("salon_id"));
+                            laterModel.setSalon_unique_id(listObj.getString("salon_unique_id"));
+                            laterModel.setSalon_name(listObj.getString("salon_name"));
+                            laterModel.setImage(listObj.getString("image"));
+                            laterModel.setDiscount(listObj.getString("discount"));
+                            laterModel.setRating(listObj.getString("rating"));
+                            laterModel.setAddress(listObj.getString("address"));
+                            laterModel.setLatitude(listObj.getString("latitude"));
+                            laterModel.setLongitude(listObj.getString("longitude"));
+                            laterModel.setAvailability(listObj.getString("availability"));
+                            laterModel.setDistance(listObj.getString("distance"));
+                            laterModel.setFeatured_flag(listObj.getString("featured_flag"));
+                            LaterBookingL.add(laterModel);
                         }
-                        ry_now_list_items.setAdapter(new NowSalonAdapter(NowListDB,getApplicationContext()));
+                        book_later_list.setAdapter(new LaterSalonAdapter(LaterBookingL,getApplicationContext()));
                         customLoader.stopLoadingDailog();
                     }else{
-
+                        Log.d("error", "No Data Found");
+                        customLoader.stopLoadingDailog();
                     }
                 }catch (Exception ex){
                     Log.d("error", ex.getLocalizedMessage());
@@ -205,6 +208,7 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
                 param.put("access_token",Global.access_token);
                 param.put("lat", "28.467539");
                 param.put("long", "77.082108");
+                param.put("datetime", "31-03-2020 6:00PM");
                 return param;
             }
         };
@@ -212,7 +216,7 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setProfileView() {
-        startActivity(new Intent(NowListActivity.this,ProfileActivity.class));
+        startActivity(new Intent(LaterBookingList.this, ProfileActivity.class));
         finish();
     }
 }

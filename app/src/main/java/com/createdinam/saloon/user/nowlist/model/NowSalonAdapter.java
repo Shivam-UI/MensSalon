@@ -16,12 +16,14 @@ import com.createdinam.saloon.R;
 import com.createdinam.saloon.user.HomeListModel;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowListHolder>{
     NowPagerSlider pagerSlider;
     ArrayList<NowModel> mNowList = new ArrayList<NowModel>();
     Context mContext;
-
+    Timer timer;
     public NowSalonAdapter(ArrayList<NowModel> mNowList, Context mContext) {
         this.mNowList = mNowList;
         this.mContext = mContext;
@@ -35,7 +37,7 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NowListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final NowListHolder holder, int position) {
         // get data from list
         String id = mNowList.get(position).getSalon_id();
         String sal_name = mNowList.get(position).getSalon_name();
@@ -57,7 +59,7 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
         // remove and split links
         String[] images = sal_images.split(", ");
         String url = "";
-        ArrayList<String> ListImagesSlider = new ArrayList<String>();
+        final ArrayList<String> ListImagesSlider = new ArrayList<String>();
         for (int i = 0;i< images.length;i++){
             url = images[i].replaceAll("\\s","%20");
             Log.d("URL",""+url);
@@ -66,6 +68,21 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
         // set to pager view
         pagerSlider = new NowPagerSlider(ListImagesSlider,mContext);
         holder.mNow_slider.setAdapter(pagerSlider);
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                holder.mNow_slider.post(new Runnable(){
+
+                    @Override
+                    public void run() {
+                        holder.mNow_slider.setCurrentItem((holder.mNow_slider.getCurrentItem()+1)%ListImagesSlider.size());
+                    }
+                });
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 3000, 3000);
 
         // set data to list
         holder.nw_sal_name.setText(sal_name);
@@ -85,12 +102,12 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
         RatingBar nw_sal_rating;
         public NowListHolder(@NonNull View itemView) {
             super(itemView);
-            mNow_slider = itemView.findViewById(R.id.now_slider);
             nw_sal_rating = itemView.findViewById(R.id.nw_sal_rating);
             nw_sal_name = itemView.findViewById(R.id.nw_sal_name);
             now_sal_distance = itemView.findViewById(R.id.now_sal_distance);
             nw_sal_address = itemView.findViewById(R.id.nw_sal_address);
             nw_sal_discount = itemView.findViewById(R.id.nw_sal_discount);
+            mNow_slider = itemView.findViewById(R.id.now_slider);
         }
     }
 }

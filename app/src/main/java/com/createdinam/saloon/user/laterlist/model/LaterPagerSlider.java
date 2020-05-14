@@ -1,4 +1,4 @@
-package com.createdinam.saloon.user.nowlist.model;
+package com.createdinam.saloon.user.laterlist.model;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -23,12 +23,13 @@ import com.createdinam.saloon.R;
 
 import java.util.ArrayList;
 
-public class NowPagerSlider extends PagerAdapter {
+public class LaterPagerSlider extends PagerAdapter {
+
     LayoutInflater mInflater;
     ArrayList<String> imageList;
     Context mContext;
 
-    public NowPagerSlider(ArrayList<String> imageList, Context mContext) {
+    public LaterPagerSlider(ArrayList<String> imageList, Context mContext) {
         this.imageList = imageList;
         this.mContext = mContext;
     }

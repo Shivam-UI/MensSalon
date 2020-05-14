@@ -30,11 +30,14 @@ import com.ouattararomuald.slider.ImageSlider;
 import com.ouattararomuald.slider.SliderAdapter;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListHolder> {
     ViewPagerSlider mViewPagerSlider;
     ArrayList<HomeListModel> mHlist = new ArrayList<HomeListModel>();
     Context mContext;
+    Timer timer;
     private static final String TAG = "HomeListAdapter";
     public HomeListAdapter(ArrayList<HomeListModel> mHlist, Context mContext) {
         this.mHlist = mHlist;
@@ -49,7 +52,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final HListHolder holder, int position) {
         String sid = mHlist.get(position).getSalon_id();
         String s_uid = mHlist.get(position).getSalon_unique_id();
         String sname = mHlist.get(position).getSalon_name();
@@ -61,14 +64,31 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
 
         String[] images = simage.split(", ");
         String url = "";
-        ArrayList<String> ListImagesSlider = new ArrayList<String>();
+        final ArrayList<String> ListImagesSlider = new ArrayList<String>();
         for (int i = 0;i< images.length;i++){
             url = images[i].replaceAll("\\s","%20");
             Log.d("URL",""+url);
             ListImagesSlider.add(url);
         }
 
+        // set adapter to view pager
         mViewPagerSlider = new ViewPagerSlider(mContext,images,ListImagesSlider);
+        holder.salon_slider.setAdapter(mViewPagerSlider);
+
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                holder.salon_slider.post(new Runnable(){
+
+                    @Override
+                    public void run() {
+                        holder.salon_slider.setCurrentItem((holder.salon_slider.getCurrentItem()+1)%ListImagesSlider.size());
+                    }
+                });
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 3000, 3000);
 
         // set value
         if(sdiscount.trim().matches("")){
@@ -83,7 +103,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.HListH
         holder.sal_add.setText(sadd);
         holder.sal_distnc.setText(sdistance);
         holder.sal_rating.setRating(Integer.parseInt(srating));
-        holder.salon_slider.setAdapter(mViewPagerSlider);
     }
 
     @Override
