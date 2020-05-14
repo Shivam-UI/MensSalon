@@ -11,6 +11,7 @@
     <color name="alert_background">#00FFFFFF</color>
     <color name="resend_code_btn">#BFFFFFFF</color>
     <color name="colorGoogle">@android:color/holo_red_dark</color>
-    <color name="color_star_background">#4C292929</color>
+    <color name="color_star_background">#1A292929</color>
     <color name="discount_text">#FF3B30</color>
+    <color name="second_text_color_bk">#DA535353</color>
 </resources>

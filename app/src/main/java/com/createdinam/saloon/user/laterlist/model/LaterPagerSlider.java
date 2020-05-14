@@ -23,7 +23,7 @@ import com.createdinam.saloon.R;
 
 import java.util.ArrayList;
 
-public class LaterPagerSlider extends PagerAdapter {
+public class LaterPagerSlider extends PagerAdapter implements View.OnClickListener {
 
     LayoutInflater mInflater;
     ArrayList<String> imageList;
@@ -49,6 +49,7 @@ public class LaterPagerSlider extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         mInflater = (LayoutInflater) mContext.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = mInflater.inflate(R.layout.view_pager_slider_items,container,false);
+
         final ImageView imageView;
         imageView = (ImageView)itemView.findViewById(R.id.slider_items_view);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -82,5 +83,16 @@ public class LaterPagerSlider extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         ((ViewPager)container).removeView((View)object);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+
+        return super.getItemPosition(object);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

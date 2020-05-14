@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +32,7 @@ public class LaterSalonAdapter extends RecyclerView.Adapter<LaterSalonAdapter.La
 
     @NonNull
     @Override
-    public LaterListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LaterListHolder onCreateViewHolder(@NonNull ViewGroup parent, final int viewType) {
         View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.later_list_items_view,parent,false);
         return new LaterListHolder(mView);
     }
