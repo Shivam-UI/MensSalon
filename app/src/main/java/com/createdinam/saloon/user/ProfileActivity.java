@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.createdinam.saloon.NumberActivity;
 import com.createdinam.saloon.R;
 import com.createdinam.saloon.global.CustomLoader;
+import com.createdinam.saloon.user.nowlist.NowListActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -128,6 +129,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         Toast.makeText(this, "Update Profile Clicked!", Toast.LENGTH_SHORT).show();
     }
     private void setBackToHomeViewEnable() {
+        startActivity(new Intent(ProfileActivity.this,UserHomeActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
         startActivity(new Intent(ProfileActivity.this,UserHomeActivity.class));
         finish();
     }

@@ -29,6 +29,7 @@ import com.createdinam.saloon.R;
 import com.createdinam.saloon.global.CustomLoader;
 import com.createdinam.saloon.global.Global;
 import com.createdinam.saloon.global.InitFunction;
+import com.createdinam.saloon.global.calender.CustomCalender;
 import com.createdinam.saloon.user.ProfileActivity;
 import com.createdinam.saloon.user.UserHomeActivity;
 import com.createdinam.saloon.user.laterlist.model.LaterModel;
@@ -135,11 +136,12 @@ public class LaterBookingList extends AppCompatActivity implements View.OnClickL
     }
 
     private void setLaterView() {
-        Toast.makeText(this, "Later", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Later", Toast.LENGTH_SHORT).show();
     }
 
     private void setMapView() {
-        Toast.makeText(this, "Map", Toast.LENGTH_SHORT).show();
+        CustomCalender customCalender = new CustomCalender(this);
+        customCalender.showCalendar();
     }
 
     private void setListView() {
@@ -217,6 +219,12 @@ public class LaterBookingList extends AppCompatActivity implements View.OnClickL
 
     private void setProfileView() {
         startActivity(new Intent(LaterBookingList.this, ProfileActivity.class));
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(LaterBookingList.this,UserHomeActivity.class));
         finish();
     }
 }

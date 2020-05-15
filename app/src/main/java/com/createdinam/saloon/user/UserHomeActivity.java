@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,6 +29,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -37,9 +39,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.createdinam.saloon.MainActivity;
 import com.createdinam.saloon.R;
 import com.createdinam.saloon.global.CustomLoader;
 import com.createdinam.saloon.global.InitFunction;
+import com.createdinam.saloon.global.LinearLayoutManagerWithSmoothScroller;
+import com.createdinam.saloon.global.calender.CustomCalender;
 import com.createdinam.saloon.user.homelist.HomeListAdapter;
 import com.createdinam.saloon.user.homelist.HotListAdapter;
 import com.createdinam.saloon.user.laterlist.LaterBookingList;
@@ -82,6 +87,8 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
     ArrayList<HomeListModel> home_list = new ArrayList<HomeListModel>();
     RecyclerView hot_salon_list;
     RecyclerView home_list_rey;
+    Runnable runnable;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,6 +233,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
                             hot_list.add(salonModel);
                         }
                         hot_salon_list.setAdapter(new HotListAdapter(hot_list,UserHomeActivity.this));
+                        autoScroll();
                         customLoader.stopLoadingDailog();
                     }
                 } catch (Exception ex) {
@@ -346,5 +354,26 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onProviderDisabled(String provider) {
         Log.d("loc_disable", "" + provider);
+    }
+
+    public void autoScroll() {
+        final int speedScroll = 4000;
+        handler = new Handler();
+        runnable = new Runnable() {
+            int count = -1;
+            @Override
+            public void run() {
+                if (count < hot_salon_list.getAdapter().getItemCount()) {
+                    hot_salon_list.smoothScrollToPosition(++count);
+                    handler.postDelayed(this, speedScroll);
+                }
+                if (count == hot_salon_list.getAdapter().getItemCount()) {
+                    //hot_salon_list.setLayoutManager(new LinearLayoutManagerWithSmoothScroller(UserHomeActivity.this,0,false));
+                    hot_salon_list.smoothScrollToPosition(++count);
+                    handler.postDelayed(this, speedScroll);
+                }
+            }
+        };
+        handler.post(runnable);
     }
 }

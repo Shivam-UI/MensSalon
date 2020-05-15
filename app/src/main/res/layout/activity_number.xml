@@ -13,10 +13,11 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="70dp"
-        android:background="@drawable/splash_background_crop"
+        android:background="@drawable/splash_screen_background"
         android:orientation="vertical">
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/welcome_text"
             android:text="@string/splash_word"
             android:layout_marginBottom="50dp"
@@ -38,15 +39,17 @@
 
         <Button
             android:id="@+id/submit_number"
-            android:layout_width="160dp"
-            android:layout_height="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textAllCaps="false"
+            android:paddingRight="50dp"
+            android:paddingLeft="50dp"
             android:layout_below="@+id/enter_number"
             android:gravity="center"
             android:layout_margin="30dp"
             android:fontFamily="@font/montserrat_bold"
             android:textSize="20sp"
-            android:textColor="@color/text_button_color"
+            android:textColor="@color/black"
             android:background="@drawable/graident_button_background"
             android:text="@string/submit_btn" />
     </LinearLayout>

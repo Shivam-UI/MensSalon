@@ -215,4 +215,10 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
         startActivity(new Intent(NowListActivity.this,ProfileActivity.class));
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(NowListActivity.this,UserHomeActivity.class));
+        finish();
+    }
 }
