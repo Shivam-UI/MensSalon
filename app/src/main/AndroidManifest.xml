@@ -17,8 +17,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".user.laterlist.LaterBookingList"
+            android:name=".global.AlertErrorActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".user.laterlist.LaterBookingList"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".user.nowlist.NowListActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -1,10 +1,12 @@
 package com.createdinam.saloon.global.calender;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +27,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.createdinam.saloon.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CustomCalender {
     private static List<CalenderModel> calendarList = new ArrayList<>();
-    private static RecyclerView recyclerView;
-    private static RelativeLayout set_cancel_lay,set_date_lay;
+    private static List<TimeModel> timerList = new ArrayList<>();
+    private static RecyclerView recyclerView, recycler_timer_picker;
+    private static RelativeLayout set_cancel_lay, set_date_lay;
     private static CalendarAdapter mAdapter;
+    private static TimerAdapter mTimerAdapter;
     Dialog mDialog;
     Activity mActivity;
 
@@ -39,19 +45,25 @@ public class CustomCalender {
         this.mActivity = mActivity;
     }
 
-    public void showCalendar(){
-        mDialog = new Dialog(mActivity,R.style.CalendarDialog);
+    public CustomCalender() {
+    }
+
+    public void showCalendar() {
+        mDialog = new Dialog(mActivity, R.style.CalendarDialog);
+        mDialog.setContentView(R.layout.calendar_dailog_picker);
         //mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        //mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         mDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mDialog.getWindow().setGravity(Gravity.BOTTOM);
-        mDialog.setContentView(R.layout.calendar_dailog_picker);
         mDialog.setCanceledOnTouchOutside(false);
         mDialog.setCancelable(false);
         startCustomCalendarView();
+        startTimerAsPerCalanderDate();
         mDialog.show();
     }
 
-    public void hideCalendar(){
+    public void hideCalendar() {
         set_cancel_lay = mDialog.findViewById(R.id.set_cancel_lay);
         set_cancel_lay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,13 +85,15 @@ public class CustomCalender {
         hideCalendar();
         calendarList.clear();
         recyclerView = mDialog.findViewById(R.id.recycler_view);
+        recycler_timer_picker = mDialog.findViewById(R.id.recycler_timer_picker);
         mAdapter = new CalendarAdapter(calendarList);
+        mTimerAdapter = new TimerAdapter(timerList);
         //recyclerView.setHasFixedSize(true);
-
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mActivity.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        final RecyclerView.LayoutManager mTimerLayoutManager = new LinearLayoutManager(mActivity.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
+        recycler_timer_picker.setLayoutManager(mTimerLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -97,35 +111,6 @@ public class CustomCalender {
             }
         });
         recyclerView.setAdapter(mAdapter);
-        // row click listener
-//        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mActivity.getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-//            @Override
-//            public void onClick(View view, int position) {
-//                CalenderModel calendar = calendarList.get(position);
-//                TextView childTextView = (TextView) (view.findViewById(R.id.day_1));
-//                CardView cardView = (view.findViewById(R.id.date_container));
-//                Animation startRotateAnimation = AnimationUtils.makeInChildBottomAnimation(mActivity.getApplicationContext());
-//                childTextView.startAnimation(startRotateAnimation);
-//                childTextView.setTextColor(Color.CYAN);
-//                cardView.setCardBackgroundColor(Color.GREEN);
-//                Toast.makeText(mActivity.getApplicationContext(), calendar.getDay() + " is selected!", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onLongClick(View view, int position) {
-//                CalenderModel calendar = calendarList.get(position);
-//                TextView childTextView = (TextView) (view.findViewById(R.id.day_1));
-//                childTextView.setTextColor(Color.GREEN);
-//                Toast.makeText(mActivity.getApplicationContext(), calendar.getDate() + "/" + calendar.getDay() + "/" + calendar.getMonth() + "   selected!", Toast.LENGTH_SHORT).show();
-//            }
-//        }));
-
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mActivity, "you clicked on "+v.getTag() , Toast.LENGTH_SHORT).show();
-            }
-        });
         prepareCalendarData();
     }
 
@@ -143,12 +128,12 @@ public class CustomCalender {
 
     /*
      * Prepares sample data to provide data set to adapter
-    */
+     */
     private void prepareCalendarData() {
         // run a for loop for all the next 30 days of the current month starting today
         // initialize my calendar Data and get Instance
         // get next to get next set of date etc.. which can be used to populate MyCalendarList in for loop
-        CalendarData m_calendar = new CalendarData(-2);
+        CalendarData m_calendar = new CalendarData(0);
         for (int i = 0; i < 30; i++) {
             CalenderModel calendar = new CalenderModel(m_calendar.getWeekDay(), String.valueOf(m_calendar.getDay()), String.valueOf(m_calendar.getMonth()), String.valueOf(m_calendar.getYear()), i);
             m_calendar.getNextWeekDay(1);
@@ -157,5 +142,23 @@ public class CustomCalender {
         // notify adapter about data set changes
         // so that it will render the list with new data
         mAdapter.notifyDataSetChanged();
+    }
+
+    public void startTimerAsPerCalanderDate() {
+        timerList.clear();
+        Date calendar = Calendar.getInstance().getTime();
+        for (int i = 1; i < 24; i++) {
+            String time_type = "";
+            if (i < 12) {
+                time_type = "AM";
+            } else {
+                time_type = "PM";
+            }
+            TimeModel timeModel = new TimeModel(i, time_type);
+            timerList.add(timeModel);
+            Log.d("hours", " " + calendar.getHours() + " : " + time_type + " " + timerList.size());
+        }
+        recycler_timer_picker.setAdapter(mTimerAdapter);
+        mTimerAdapter.notifyDataSetChanged();
     }
 }

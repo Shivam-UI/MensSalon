@@ -9,26 +9,26 @@
     android:gravity="center"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp" >
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/date_container"
+        android:id="@+id/time_container"
         android:layout_centerInParent="true"
         android:shape="oval"
         app:cardCornerRadius="75dp"
         android:textAlignment="center"
         app:cardBackgroundColor="@android:color/white"
-        android:layout_width="60dp"
-        android:layout_height="60dp">
+        android:layout_width="50dp"
+        android:layout_height="50dp">
 
 
         <TextView
-            android:id="@+id/day_1"
+            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:layout_gravity="top"
             android:textAlignment="center"
             android:textStyle="normal"
@@ -36,17 +36,16 @@
             tools:ignore="RtlCompat" />
 
         <TextView
-            android:id="@+id/date_1"
+            android:id="@+id/txt_hours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:fontFamily="@font/montserrat_bold"
+            android:textSize="26sp"
             android:textAlignment="center"
             android:layout_gravity="center"
             android:layout_below="@id/day_1" />
 
         <TextView
-            android:id="@+id/month_1"
+            android:id="@+id/txt_AM_PM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

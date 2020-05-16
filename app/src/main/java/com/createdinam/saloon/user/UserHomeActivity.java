@@ -41,6 +41,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.createdinam.saloon.MainActivity;
 import com.createdinam.saloon.R;
+import com.createdinam.saloon.global.AlertErrorActivity;
 import com.createdinam.saloon.global.CustomLoader;
 import com.createdinam.saloon.global.InitFunction;
 import com.createdinam.saloon.global.LinearLayoutManagerWithSmoothScroller;
@@ -54,6 +55,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -133,6 +136,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
             getUserCurrentLocation();
             startHomeViewContent(USER_ID);
             startHotDealViewContent(USER_ID);
+            //calculateTime();
         } else {
             Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
         }
@@ -192,6 +196,9 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("saloon_error", "" + error.getMessage());
+                customLoader.stopLoadingDailog();
+                startActivity(new Intent(getApplicationContext(), AlertErrorActivity.class));
+                finish();
             }
         }) {
             @Override
@@ -375,5 +382,17 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
             }
         };
         handler.post(runnable);
+    }
+
+    public void calculateTime(){
+        Calendar cal = Calendar.getInstance();
+        Date d1 = cal.getTime();// current time
+
+        Date d2 = new Date();
+        long diff = d2.getTime() - d1.getTime();
+        long diffHours = diff / (60 * 60 * 1000);
+        long diffMinutes = diff / (60 * 1000) % 60;
+
+        Log.d("different_hours",diffHours+""+diffMinutes);
     }
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@color/dialog_transparent"
+    android:background="#43000000"
     android:padding="10dp"
     app:cardCornerRadius="15dp">
 
@@ -12,21 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/dialog_transparent"
         android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="14dp">
 
             <TextView
                 android:id="@+id/description_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:fontFamily="@font/montserrat_bold"
+                android:gravity="center"
                 android:text="@string/txt_calender_hint" />
 
         </LinearLayout>
@@ -34,13 +33,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="25dp"
             android:paddingLeft="5dp"
+            android:paddingTop="25dp"
             android:paddingRight="5dp"
             android:paddingBottom="20dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fadingEdge="vertical"
+                android:paddingRight="20dp"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="30dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_timer_picker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fadingEdge="vertical"
@@ -65,9 +82,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="@string/txt_calender_cancel"
                     android:textAlignment="center"
-                    android:fontFamily="@font/montserrat_bold"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
@@ -78,17 +95,17 @@
                 android:id="@+id/set_date_lay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginLeft=".5dp"
+                android:layout_weight="1"
                 android:background="@color/bottom_btn_background"
                 android:padding="22dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="@string/txt_calender_set"
                     android:textAlignment="center"
-                    android:fontFamily="@font/montserrat_bold"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 

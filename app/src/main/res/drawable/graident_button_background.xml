@@ -4,7 +4,7 @@
     <!--  Gradient Bg for listrow -->
     <gradient
         android:startColor="#BFF1F1F2"
-        android:endColor="#BF0AABC3"
+        android:endColor="#26c0a2"
         android:angle="360" />
     <corners android:radius="18dp" />
 </shape>

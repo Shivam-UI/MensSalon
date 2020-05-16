@@ -10,7 +10,7 @@ public class CalenderModel {
     // year .. 2019.. beyond
 
     private String day;
-    private String date, month, year;
+    private String date, month, year,hours,min;
     private int pos;
 
     public CalenderModel() {

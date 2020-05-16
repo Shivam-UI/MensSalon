@@ -3,6 +3,7 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#232323</color>
+    <color name="text_color_main">#26c0a2</color>
     <color name="status_bar_top">#7FFFFFFF</color>
     <color name="text_color">#FFFFFF</color>
     <color name="black">#404040</color>
@@ -15,6 +16,6 @@
     <color name="discount_text">#FF3B30</color>
     <color name="second_text_color_bk">#DA535353</color>
     <color name="dialog_background_transparent">#00535353</color>
-    <color name="dialog_transparent">#1F535353</color>
+    <color name="dialog_transparent">#43000000</color>
     <color name="text_transparent">#98838383</color>
 </resources>

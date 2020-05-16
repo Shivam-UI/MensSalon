@@ -1,25 +1,37 @@
 package com.createdinam.saloon.global.calender;
 
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.createdinam.saloon.R;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyViewHolder> {
     private List<CalenderModel> mCalendar;
-    private int recyclecount=0;
-
+    private int recyclecount = 0;
+    int selectedPosition = -1;
+    CustomCalender customCalender;
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tb_day, tb_date,tb_month;
+        private TextView tb_day, tb_date, tb_month;
+        private CardView mCardView;
 
         public MyViewHolder(View view) {
             super(view);
             tb_day = view.findViewById(R.id.day_1);
             tb_date = view.findViewById(R.id.date_1);
             tb_month = view.findViewById(R.id.month_1);
+            mCardView = view.findViewById(R.id.date_container);
         }
     }
 
@@ -35,13 +47,37 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        CalenderModel calendar = mCalendar.get(position);
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        customCalender = new CustomCalender();
+        final CalenderModel calendar = mCalendar.get(position);
         // set date to calender
         holder.tb_day.setText(calendar.getDay());
         holder.tb_month.setText(calendar.getMonth());
         holder.tb_date.setText(calendar.getDate());
+        // set color to card view
+        holder.mCardView.setCardBackgroundColor(Color.parseColor("#000000"));
+        if (selectedPosition == position) {
+            holder.mCardView.setCardBackgroundColor(Color.parseColor("#26c0a2"));
+            holder.tb_day.setTextColor(Color.parseColor("#ffffff"));
+            holder.tb_month.setTextColor(Color.parseColor("#ffffff"));
+            holder.tb_date.setTextColor(Color.parseColor("#ffffff"));
+        } else {
+            holder.mCardView.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            holder.tb_day.setTextColor(Color.parseColor("#000000"));
+            holder.tb_month.setTextColor(Color.parseColor("#000000"));
+            holder.tb_date.setTextColor(Color.parseColor("#000000"));
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedPosition = position;
+                Log.d("select_date ",""+calendar.getDate()+" - "+calendar.getYear()+" - "+calendar.getMonth());
+                //customCalender.startTimerAsPerCalanderDate();
+                notifyDataSetChanged();
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -49,7 +85,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
     }
 
     @Override
-    public void onViewRecycled (MyViewHolder holder){
+    public void onViewRecycled(MyViewHolder holder) {
         recyclecount++;
     }
 

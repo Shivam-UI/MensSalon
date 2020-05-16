@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.createdinam.saloon.R;
+import com.createdinam.saloon.global.AlertErrorActivity;
 import com.createdinam.saloon.global.CustomLoader;
 import com.createdinam.saloon.global.Global;
 import com.createdinam.saloon.global.InitFunction;
@@ -189,7 +190,9 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
 
                     }
                 }catch (Exception ex){
-                    Log.d("error", ex.getLocalizedMessage());
+                    Log.d("error-", ex.getLocalizedMessage());
+                    startActivity(new Intent(getApplicationContext(), AlertErrorActivity.class));
+                    finish();
                 }
             }
         }, new Response.ErrorListener() {
@@ -205,6 +208,7 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
                 param.put("access_token",Global.access_token);
                 param.put("lat", "28.467539");
                 param.put("long", "77.082108");
+                Log.d("now_param",param.toString());
                 return param;
             }
         };

@@ -29,4 +29,7 @@
     <string name="txt_calender_hint">Hmm... Let\'s pick a date</string>
     <string name="txt_calender_set">Set</string>
     <string name="txt_calender_cancel">Cancel</string>
+    <!-- alert error activity -->
+    <string name="btn_go_home">Let\'s go home</string>
+    <string name="txt_go_home">Oh my Gosh... we are so thrilled yet embarrassed that you expected us here too... Hmm we will come here soon... But until then..</string>
 </resources>

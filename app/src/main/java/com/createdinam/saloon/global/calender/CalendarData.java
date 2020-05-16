@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class CalendarData {
-    private int startday, currentmonth, currentyear, dayofweek;
+    private int startday, currentmonth, currentyear, dayofweek,hrs,hrs12;
     private String stringDayofWeek;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("E");
     private Calendar calendar;
@@ -22,6 +22,8 @@ public class CalendarData {
         this.currentyear = calendar.get(Calendar.YEAR);
         this.dayofweek = calendar.get(Calendar.DAY_OF_WEEK);
         this.stringDayofWeek = dateFormat.format(calendar.getTime());
+        this.hrs = calendar.get(Calendar.HOUR_OF_DAY);
+        this.hrs12 = calendar.get(Calendar.HOUR);
     }
 
     public void getNextWeekDay(int nxt) {
@@ -45,4 +47,5 @@ public class CalendarData {
         return this.startday;
     }
 
+    public int getHours(){ return this.hrs; }
 }

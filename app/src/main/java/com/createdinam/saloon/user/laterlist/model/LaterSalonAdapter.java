@@ -63,7 +63,7 @@ public class LaterSalonAdapter extends RecyclerView.Adapter<LaterSalonAdapter.La
         final ArrayList<String> ListImagesSlider = new ArrayList<String>();
         for (int i = 0;i< images.length;i++){
             url = images[i].replaceAll("\\s","%20");
-            Log.d("URL",""+url);
+            //Log.d("URL",""+url);
             ListImagesSlider.add(url);
         }
         // set Pager Slider
