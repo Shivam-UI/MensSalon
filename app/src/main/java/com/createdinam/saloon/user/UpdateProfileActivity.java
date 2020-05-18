@@ -210,7 +210,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                             int start1 = i * maxLogSize;
                             int end = (i + 1) * maxLogSize;
                             end = end > response.length() ? response.length() : end;
-                            Log.d("response", response.toString());
+                            //Log.d("response", response.toString());
                         }
                         if (obj.getString("status").matches("true")){
                             customLoader.stopLoadingDailog();

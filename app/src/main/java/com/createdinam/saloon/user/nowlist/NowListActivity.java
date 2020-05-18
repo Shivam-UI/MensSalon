@@ -105,7 +105,7 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
         txt_now.setText("Book Now");
         txt_later.setText("Book Later");
         if (InitFunction.getInstance(getApplicationContext()).isNetworkAvaliable(NowListActivity.this)) {
-            customLoader.startLoadingDailog();
+            //customLoader.startLoadingDailog();
             setNowListView();
         } else {
             Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();

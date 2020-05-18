@@ -40,6 +40,20 @@ import com.createdinam.saloon.user.itemdetails.model.DescriptionModel;
 import com.createdinam.saloon.user.laterlist.LaterBookingList;
 import com.createdinam.saloon.user.laterlist.model.LaterModel;
 import com.createdinam.saloon.user.laterlist.model.LaterSalonAdapter;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,7 +65,7 @@ import java.util.Map;
 import static com.createdinam.saloon.global.Global.MY_PREFS_NAME;
 
 public class SaloonItensDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-    private static String USER_ID,SALON_ID = "",SAL_LAT="",SAL_LONG="";
+    private static String USER_ID,SALON_ID = "",SAL_LAT="",SAL_LONG="",VIDEO_URI="";
     private static CustomLoader customLoader;
     SharedPreferences.Editor editor;
     SharedPreferences prefs;
@@ -67,7 +81,8 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
     ArrayList<DescriptionModel> mDescriptionData = new ArrayList<DescriptionModel>();
     // enable view
     TextView salon_des_name,salon_des_address,salon_des_time,salon_des_location,salon_description;
-    VideoView desc_vide_details;
+    SimpleExoPlayerView desc_vide_details;
+    SimpleExoPlayer mSimpleExoPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,10 +113,6 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
         salon_des_location = findViewById(R.id.salon_des_location);
         salon_description = findViewById(R.id.salon_description);
         desc_vide_details = findViewById(R.id.desc_vide_details);
-        MediaController mediaController= new MediaController(this);
-        mediaController.setAnchorView(desc_vide_details);
-        desc_vide_details.setMediaController(mediaController);
-
         //book_later_list = findViewById(R.id.book_later_list);
         //LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         //book_later_list.setLayoutManager(layoutManager);
@@ -150,7 +161,7 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
                         int start1 = i * maxLogSize;
                         int end = (i + 1) * maxLogSize;
                         end = end > response.length() ? response.length() : end;
-                        Log.d("response", response.toString());
+                        //Log.d("response", response.toString());
                     }
                     if (obj.getString("status").matches("true")) {
                         JSONObject objData = obj.getJSONObject("data");
@@ -162,10 +173,8 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
                         salon_des_time.setText(detailslist.getString("availability"));
                         salon_des_location.setText(detailslist.getString("distance"));
                         salon_description.setText(detailslist.getString("salon_description"));
-                        desc_vide_details.setBackgroundDrawable(new BitmapDrawable(detailslist.getString("image")));
-                        desc_vide_details.setVideoURI(Uri.parse(detailslist.getString("videos")));
-                        desc_vide_details.requestFocus();
-                        desc_vide_details.start();
+                        // set Player
+                        setupMediaPlayer(desc_vide_details,detailslist.getString("image"));
                         // set category
                         JSONArray categoryList = objData.getJSONArray("categories");
                         for(int i = 0; i < categoryList.length();i++){
@@ -200,6 +209,19 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
             }
         };
         requestQueue.add(nowListRequest);
+    }
+
+    private void setupMediaPlayer(SimpleExoPlayerView desc_vide_details,String url) {
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
+        mSimpleExoPlayer= ExoPlayerFactory.newSimpleInstance(this,trackSelector);
+        Uri mURI = Uri.parse(url);
+        DefaultHttpDataSourceFactory defaultHttpDataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+        MediaSource mediaSource = new ExtractorMediaSource(mURI,defaultHttpDataSourceFactory,extractorsFactory,null,null);
+        desc_vide_details.setPlayer(mSimpleExoPlayer);
+        mSimpleExoPlayer.prepare(mediaSource);
+        mSimpleExoPlayer.setPlayWhenReady(true);
     }
 
     @Override
@@ -244,7 +266,7 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(SaloonItensDetailsActivity.this,UserHomeActivity.class));
+        startActivity(new Intent(SaloonItensDetailsActivity.this,LaterBookingList.class));
         finish();
     }
 }
