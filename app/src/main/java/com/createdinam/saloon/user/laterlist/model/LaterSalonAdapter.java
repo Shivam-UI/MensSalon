@@ -1,6 +1,7 @@
 package com.createdinam.saloon.user.laterlist.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.createdinam.saloon.R;
+import com.createdinam.saloon.user.itemdetails.SaloonItensDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -38,7 +40,7 @@ public class LaterSalonAdapter extends RecyclerView.Adapter<LaterSalonAdapter.La
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final LaterListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final LaterListHolder holder, final int position) {
         // get data from list
         String id = mLaterList.get(position).getSalon_id();
         String sal_name = mLaterList.get(position).getSalon_name();
@@ -91,6 +93,19 @@ public class LaterSalonAdapter extends RecyclerView.Adapter<LaterSalonAdapter.La
         holder.later_sal_distance.setText(sal_distance);
         holder.later_sal_address.setText(sal_address);
         holder.later_sal_rating.setRating(Float.parseFloat(sal_rating));
+
+        // add click event
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailsView = new Intent(mContext.getApplicationContext(), SaloonItensDetailsActivity.class);
+                detailsView.putExtra("salon_id",""+mLaterList.get(position).getSalon_id());
+                detailsView.putExtra("lat",""+mLaterList.get(position).getLatitude());
+                detailsView.putExtra("long",""+mLaterList.get(position).getLongitude());
+                detailsView.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(detailsView);
+            }
+        });
     }
 
     @Override

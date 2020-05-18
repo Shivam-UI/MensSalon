@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -40,12 +41,12 @@ public class CustomCalender {
     private static TimerAdapter mTimerAdapter;
     Dialog mDialog;
     Activity mActivity;
-
     public CustomCalender(Activity mActivity) {
         this.mActivity = mActivity;
     }
 
     public CustomCalender() {
+
     }
 
     public void showCalendar() {

@@ -1,6 +1,7 @@
 package com.createdinam.saloon.global.calender;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerHolder>
             @Override
             public void onClick(View v) {
                 selectedPosition = position;
+                Log.d("selected_time",""+mTimer.get(selectedPosition).getHrs()+" : "+mTimer.get(selectedPosition).getAM_PM());
                 notifyDataSetChanged();
             }
         });

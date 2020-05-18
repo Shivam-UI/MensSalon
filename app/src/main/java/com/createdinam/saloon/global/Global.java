@@ -28,4 +28,7 @@ public class Global {
 
     /*<------------------------------------------- Saloon Later list --------------------------------------------------------->*/
     public static final String Saloon_Later_List = "http://bizhawkzdemo.com/salon_app/salon_later_list.php";
+
+    /*<------------------------------------------- Saloon Later list --------------------------------------------------------->*/
+    public static final String Saloon_items_Details = "http://bizhawkzdemo.com/salon_app/salon_description.php";
 }

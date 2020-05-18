@@ -1,6 +1,8 @@
 package com.createdinam.saloon.user.nowlist.model;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import android.app.AlertDialog;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -27,6 +30,7 @@ public class NowPagerSlider extends PagerAdapter {
     LayoutInflater mInflater;
     ArrayList<String> imageList;
     Context mContext;
+    AlertDialog mAlertDialog;
 
     public NowPagerSlider(ArrayList<String> imageList, Context mContext) {
         this.imageList = imageList;
@@ -45,15 +49,15 @@ public class NowPagerSlider extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         mInflater = (LayoutInflater) mContext.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = mInflater.inflate(R.layout.view_pager_slider_items,container,false);
+        View itemView = mInflater.inflate(R.layout.view_pager_slider_items, container, false);
         final ImageView imageView;
-        imageView = (ImageView)itemView.findViewById(R.id.slider_items_view);
+        imageView = (ImageView) itemView.findViewById(R.id.slider_items_view);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
         // set images to pager
-        try{
+        try {
             Glide.with(mContext).load(imageList.get(position))
                     .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                     .fitCenter()
@@ -71,15 +75,38 @@ public class NowPagerSlider extends PagerAdapter {
                         }
                     }).into(imageView);
 
-        }catch (Exception ex){
-            Log.d("error", "instantiateItem: "+ex.getMessage());
+        } catch (Exception ex) {
+            Log.d("error", "instantiateItem: " + ex.getMessage());
         }
+        // click event
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //create alert dialog
+                Dialog mdialog = new Dialog(mContext);
+                mdialog.setContentView(R.layout.alert_image_dailog);
+                mdialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                // set view
+                ImageView iv = mdialog.findViewById(R.id.slider_single_images);
+                Glide.with(mContext).load(imageList.get(position))
+                        .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .fitCenter()
+                        .error(R.drawable.splash_background)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL).into(iv);
+                // assign list to view
+                mdialog.setCancelable(false);
+                // show the dialog
+                //mdialog.show();
+                Log.d("slider_image", "->" + imageList.get(position));
+            }
+        });
+
         container.addView(itemView);
         return itemView;
     }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        ((ViewPager)container).removeView((View)object);
+        ((ViewPager) container).removeView((View) object);
     }
 }

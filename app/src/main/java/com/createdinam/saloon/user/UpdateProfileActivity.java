@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.createdinam.saloon.NumberActivity;
 import com.createdinam.saloon.R;
 import com.createdinam.saloon.global.CustomLoader;
+import com.createdinam.saloon.user.itemdetails.SaloonItensDetailsActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
@@ -267,6 +268,8 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             customLoader.stopLoadingDailog();
         }
     }
+
+    /*
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
@@ -298,5 +301,11 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             }
         }
         return false;
+    } */
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(UpdateProfileActivity.this,ProfileActivity.class));
+        finish();
     }
 }

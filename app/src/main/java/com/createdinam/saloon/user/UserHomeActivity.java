@@ -48,6 +48,7 @@ import com.createdinam.saloon.global.LinearLayoutManagerWithSmoothScroller;
 import com.createdinam.saloon.global.calender.CustomCalender;
 import com.createdinam.saloon.user.homelist.HomeListAdapter;
 import com.createdinam.saloon.user.homelist.HotListAdapter;
+import com.createdinam.saloon.user.itemdetails.SaloonItensDetailsActivity;
 import com.createdinam.saloon.user.laterlist.LaterBookingList;
 import com.createdinam.saloon.user.nowlist.NowListActivity;
 
@@ -293,7 +294,9 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setMapView() {
-        Toast.makeText(this, "Map", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Map", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(UserHomeActivity.this, SaloonItensDetailsActivity.class));
+        finish();
     }
 
     private void setListView() {
