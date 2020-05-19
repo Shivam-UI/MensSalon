@@ -164,7 +164,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
                         int start1 = i * maxLogSize;
                         int end = (i + 1) * maxLogSize;
                         end = end > response.length() ? response.length() : end;
-                        Log.d("response", response.toString());
+                        //Log.d("response", response.toString());
                     }
                     if (obj.getString("status").matches("true")) {
                         JSONArray homelist = obj.getJSONArray("data");

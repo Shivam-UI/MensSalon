@@ -3,144 +3,128 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".user.itemdetails.SaloonItensDetailsActivity">
 
     <include layout="@layout/common_header" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:layout_marginBottom="?actionBarSize">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:weightSum="4">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/details_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="4">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
 
-            <RelativeLayout
-                android:id="@+id/details_container"
+            <LinearLayout
+                android:id="@+id/details_holder"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.5"
-                android:padding="5dp">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="5">
 
-                <LinearLayout
-                    android:id="@+id/details_holder"
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="5">
+                    android:layout_weight="3">
 
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3">
+                    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                        android:id="@+id/desc_vide_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:background="@color/black"
+                        app:use_controller="true" />
+                </RelativeLayout>
 
-                        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-                            android:id="@+id/desc_vide_details"
-                            android:layout_width="match_parent"
-                            android:layout_height="190dp"
-                            android:background="@color/black"
-                            android:layout_gravity="center" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2">
-
-                        <TextView
-                            android:id="@+id/salon_des_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:text="@string/app_name"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/salon_des_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/salon_des_name"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:lines="3"
-                            android:text="@string/txt_go_home"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/second_text_color_bk" />
-
-                        <TextView
-                            android:id="@+id/salon_des_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/salon_des_address"
-                            android:layout_marginBottom="5dp"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:text="@string/app_name"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:id="@+id/salon_des_location"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/salon_des_time"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:text="@string/app_name"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/black" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/description_container"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:padding="5dp">
-
-                <LinearLayout
-                    android:id="@+id/description_holder"
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_weight="2">
 
                     <TextView
-                        android:id="@+id/salon_description"
+                        android:id="@+id/salon_des_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:lines="10"
+                        android:text="@string/app_name"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/salon_des_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/salon_des_name"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:lines="3"
                         android:text="@string/txt_go_home"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/second_text_color_bk" />
 
-                </LinearLayout>
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/salon_des_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/salon_des_address"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:text="@string/app_name"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black" />
 
-            <RelativeLayout
-                android:id="@+id/category_container"
+                    <TextView
+                        android:id="@+id/salon_des_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/salon_des_time"
+                        android:fontFamily="@font/montserrat_bold"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:text="@string/app_name"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/description_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/salon_description"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.5">
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:lines="4"
+                android:text="@string/txt_go_home"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/salon_description"
+                android:id="@+id/category_list_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            </RelativeLayout>
+        </RelativeLayout>
 
-
-        </LinearLayout>
-
-
-    </ScrollView>
+    </LinearLayout>
 
     <include layout="@layout/bottom_bar_lay" />
 

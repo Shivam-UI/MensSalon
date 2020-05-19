@@ -31,6 +31,7 @@ public class NowPagerSlider extends PagerAdapter {
     ArrayList<String> imageList;
     Context mContext;
     AlertDialog mAlertDialog;
+    Dialog mdialog;
 
     public NowPagerSlider(ArrayList<String> imageList, Context mContext) {
         this.imageList = imageList;
@@ -55,7 +56,7 @@ public class NowPagerSlider extends PagerAdapter {
         final ImageView imageView;
         imageView = (ImageView) itemView.findViewById(R.id.slider_items_view);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-
+        mdialog = new Dialog(mContext.getApplicationContext());
         // set images to pager
         try {
             Glide.with(mContext).load(imageList.get(position))
@@ -83,7 +84,6 @@ public class NowPagerSlider extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 //create alert dialog
-                Dialog mdialog = new Dialog(mContext);
                 mdialog.setContentView(R.layout.alert_image_dailog);
                 mdialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 // set view
@@ -96,7 +96,7 @@ public class NowPagerSlider extends PagerAdapter {
                 // assign list to view
                 mdialog.setCancelable(false);
                 // show the dialog
-                //mdialog.show();
+                mdialog.show();
                 Log.d("slider_image", "->" + imageList.get(position));
             }
         });

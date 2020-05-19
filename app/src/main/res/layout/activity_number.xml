@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/number_hint"
             android:inputType="number"
+            android:textColor="@color/black"
             android:fontFamily="@font/montserrat_bold"
             android:textSize="25sp"
             android:textAlignment="center" />

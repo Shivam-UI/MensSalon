@@ -187,12 +187,10 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
                         ry_now_list_items.setAdapter(new NowSalonAdapter(NowListDB,getApplicationContext()));
                         customLoader.stopLoadingDailog();
                     }else{
-
+                        Toast.makeText(NowListActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception ex){
                     Log.d("error-", ex.getLocalizedMessage());
-                    startActivity(new Intent(getApplicationContext(), AlertErrorActivity.class));
-                    finish();
                 }
             }
         }, new Response.ErrorListener() {

@@ -1,6 +1,7 @@
 package com.createdinam.saloon.user.itemdetails;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +37,8 @@ import com.createdinam.saloon.global.InitFunction;
 import com.createdinam.saloon.global.calender.CustomCalender;
 import com.createdinam.saloon.user.ProfileActivity;
 import com.createdinam.saloon.user.UserHomeActivity;
+import com.createdinam.saloon.user.itemdetails.model.CategoryAdapter;
+import com.createdinam.saloon.user.itemdetails.model.CategoryModel;
 import com.createdinam.saloon.user.itemdetails.model.DescriptionModel;
 import com.createdinam.saloon.user.laterlist.LaterBookingList;
 import com.createdinam.saloon.user.laterlist.model.LaterModel;
@@ -76,9 +79,9 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
     ImageView back_button;
     TextView logo_imageView, txt_later, txt_now;
     // recycler view items
-    RecyclerView book_later_list;
+    RecyclerView category_list_holder;
     // save data to ArrayList
-    ArrayList<DescriptionModel> mDescriptionData = new ArrayList<DescriptionModel>();
+    ArrayList<CategoryModel> mCategoryData = new ArrayList<CategoryModel>();
     // enable view
     TextView salon_des_name,salon_des_address,salon_des_time,salon_des_location,salon_description;
     SimpleExoPlayerView desc_vide_details;
@@ -113,10 +116,8 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
         salon_des_location = findViewById(R.id.salon_des_location);
         salon_description = findViewById(R.id.salon_description);
         desc_vide_details = findViewById(R.id.desc_vide_details);
-        //book_later_list = findViewById(R.id.book_later_list);
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        //book_later_list.setLayoutManager(layoutManager);
-        //book_later_list.setHasFixedSize(true);
+        category_list_holder = findViewById(R.id.category_list_holder);
+        category_list_holder.setLayoutManager(new GridLayoutManager(this, 3));
         // init other layout component
         back_button = findViewById(R.id.back_button);
         btn_lay_now = findViewById(R.id.btn_lay_now);
@@ -178,9 +179,16 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
                         // set category
                         JSONArray categoryList = objData.getJSONArray("categories");
                         for(int i = 0; i < categoryList.length();i++){
+                            CategoryModel categoryModel = new CategoryModel();
                             JSONObject listObj = categoryList.getJSONObject(i);
-                            //Log.d("name",""+listObj.getString("name"));
+                            // create category
+                            categoryModel.setId(listObj.getString("id"));
+                            categoryModel.setName(listObj.getString("name"));
+                            categoryModel.setCategory_image(listObj.getString("category_image"));
+                            categoryModel.setSalon_uniqueid(listObj.getString("salon_uniqueid"));
+                            mCategoryData.add(categoryModel);
                         }
+                        category_list_holder.setAdapter(new CategoryAdapter(mCategoryData,SaloonItensDetailsActivity.this));
                         customLoader.stopLoadingDailog();
                     } else {
                         Log.d("error", "No Data Found");
