@@ -53,8 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/app_name"
-                        style="@style/TextAppearance.AppCompat.Title"
+                        android:textSize="@dimen/text_size_15sp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/black" />
 
@@ -66,7 +65,7 @@
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_bold"
                         android:lines="3"
-                        android:text="@string/txt_go_home"
+                        android:textSize="@dimen/text_size_14sp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/second_text_color_bk" />
 
@@ -77,8 +76,7 @@
                         android:layout_below="@+id/salon_des_address"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_bold"
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:text="@string/app_name"
+                        android:textSize="@dimen/text_size_14sp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/black" />
 
@@ -88,8 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/salon_des_time"
                         android:fontFamily="@font/montserrat_bold"
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:text="@string/app_name"
+                        android:textSize="@dimen/text_size_14sp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/black" />
 
@@ -111,14 +108,14 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
                 android:lines="4"
-                android:text="@string/txt_go_home"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_size_14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/salon_description"
                 android:id="@+id/category_list_holder"
+                android:clipToPadding="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

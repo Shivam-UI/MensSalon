@@ -48,7 +48,7 @@
                     android:layout_weight=".5"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/app_name"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/text_size_15sp" />
 
                 <TextView
                     android:id="@+id/later_sal_distance"
@@ -59,7 +59,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/app_name"
                     android:textAlignment="textEnd"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/text_size_14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/top_1"
-                android:padding="6dp"
+                android:padding="5dp"
                 android:weightSum="1">
 
                 <TextView
@@ -75,7 +75,8 @@
                     style="@style/TextAppearance.AppCompat.Body2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".52"
+                    android:layout_weight=".41"
+                    android:textSize="@dimen/text_size_14sp"
                     android:textColor="@color/second_text_color_bk"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/app_name" />
@@ -86,7 +87,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="left"
-                    android:layout_weight=".48"
+                    android:layout_weight=".59"
                     android:isIndicator="false"
                     android:progressBackgroundTint="@color/black"
                     android:progressTint="@color/black"
@@ -112,6 +113,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/app_name"
+                    android:textSize="@dimen/text_size_14sp"
                     android:textColor="@color/discount_text" />
 
             </LinearLayout>

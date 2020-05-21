@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.createdinam.saloon.R;
+import com.createdinam.saloon.global.Global;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +42,7 @@ public class CustomCalender {
     private static TimerAdapter mTimerAdapter;
     Dialog mDialog;
     Activity mActivity;
+
     public CustomCalender(Activity mActivity) {
         this.mActivity = mActivity;
     }
@@ -60,7 +62,7 @@ public class CustomCalender {
         mDialog.setCanceledOnTouchOutside(false);
         mDialog.setCancelable(false);
         startCustomCalendarView();
-        startTimerAsPerCalanderDate();
+        startTimerAsPerCalenderDate();
         mDialog.show();
     }
 
@@ -77,7 +79,19 @@ public class CustomCalender {
         set_date_lay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mActivity, "You Select Date", Toast.LENGTH_SHORT).show();
+                if (Global.date_picker == null) {
+                    Toast.makeText(mActivity, "Select Date First", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (Global.timer_picker == null) {
+                        Toast.makeText(mActivity, "Select Time First", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (!Global.timer_picker.matches("") && !Global.date_picker.matches("")) {
+                            Toast.makeText(mActivity, Global.date_picker + " " + Global.timer_picker, Toast.LENGTH_SHORT).show();
+                            Global.date_picker = null;
+                        }
+                        Global.timer_picker = null;
+                    }
+                }
             }
         });
     }
@@ -145,7 +159,7 @@ public class CustomCalender {
         mAdapter.notifyDataSetChanged();
     }
 
-    public void startTimerAsPerCalanderDate() {
+    public void startTimerAsPerCalenderDate() {
         timerList.clear();
         Date calendar = Calendar.getInstance().getTime();
         for (int i = 1; i < 24; i++) {
@@ -157,9 +171,10 @@ public class CustomCalender {
             }
             TimeModel timeModel = new TimeModel(i, time_type);
             timerList.add(timeModel);
-            Log.d("hours", " " + calendar.getHours() + " : " + time_type + " " + timerList.size());
+            //Log.d("hours", " " + calendar.getHours() + " : " + time_type + " " + timerList.size());
         }
         recycler_timer_picker.setAdapter(mTimerAdapter);
         mTimerAdapter.notifyDataSetChanged();
+
     }
 }

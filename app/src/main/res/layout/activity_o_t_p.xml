@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/splash_screen_background"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/welcome_text"
@@ -26,13 +26,13 @@
             android:visibility="invisible" />
 
         <LinearLayout
-            android:paddingTop="60dp"
-            android:paddingLeft="60dp"
-            android:paddingRight="60dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="60dp"
+            android:paddingTop="60dp"
+            android:paddingRight="60dp">
 
             <EditText
                 android:id="@+id/enter_otp"
@@ -43,61 +43,57 @@
                 android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="25sp" />
+                android:textSize="@dimen/text_size_16sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:paddingRight="60dp"
-            android:paddingLeft="60dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp">
 
             <Button
                 android:id="@+id/submit_otp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/margin_130"
+                android:layout_height="@dimen/margin_40"
                 android:layout_below="@+id/enter_number"
                 android:layout_margin="30dp"
-                android:paddingRight="50dp"
-                android:paddingLeft="50dp"
                 android:background="@drawable/graident_button_background"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:text="@string/submit_btn"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/text_size_14sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:paddingTop="50dp"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="vertical">
-
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="50dp">
 
         </LinearLayout>
     </LinearLayout>
+
     <Button
         android:id="@+id/resend_otp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/margin_140"
+        android:layout_height="@dimen/margin_40"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:layout_margin="30dp"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp"
         android:background="@drawable/white_button_background"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/submit_resend_otp"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true"
         android:textColor="@color/text_transparent"
-        android:textSize="20sp" />
+        android:textSize="@dimen/text_size_14sp" />
 </RelativeLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="#43000000"
+    android:background="@null"
     android:padding="10dp"
     app:cardCornerRadius="15dp">
 
@@ -18,6 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@null"
+            android:layout_marginBottom="1px"
             android:padding="14dp">
 
             <TextView
@@ -25,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
+                android:textSize="@dimen/text_size_14sp"
                 android:gravity="center"
                 android:text="@string/txt_calender_hint" />
 
@@ -35,6 +38,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:paddingTop="25dp"
+            android:background="@null"
             android:paddingRight="5dp"
             android:paddingBottom="20dp">
 
@@ -44,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:fadingEdge="vertical"
                 android:paddingRight="20dp"
+                android:background="@null"
                 android:scrollbars="vertical" />
 
         </LinearLayout>
@@ -53,6 +58,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:paddingTop="10dp"
+            android:background="@null"
             android:paddingRight="5dp"
             android:paddingBottom="30dp">
 
@@ -61,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fadingEdge="vertical"
+                android:background="@null"
                 android:paddingRight="20dp"
                 android:scrollbars="vertical" />
 

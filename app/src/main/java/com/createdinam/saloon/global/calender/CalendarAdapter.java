@@ -12,7 +12,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.createdinam.saloon.R;
+import com.createdinam.saloon.global.Global;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
     private int recyclecount = 0;
     int selectedPosition = -1;
     CustomCalender customCalender;
+    // month in int convert
+    int monthNumber;
+    String MY_DATE = "";
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tb_day, tb_date, tb_month;
         private CardView mCardView;
@@ -71,8 +76,21 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.MyView
             @Override
             public void onClick(View v) {
                 selectedPosition = position;
-                Log.d("select_date ",""+calendar.getDate()+" - "+calendar.getYear()+" - "+calendar.getMonth());
-                //customCalender.startTimerAsPerCalanderDate();
+                Global.date_picker="";
+                try{
+                    //put your month name here
+                    Date date = new SimpleDateFormat("MMM").parse(calendar.getMonth());
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+                    monthNumber=cal.get(Calendar.MONTH);
+                    monthNumber = monthNumber+1;
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+                Log.d("select_date ",""+calendar.getDate()+" / "+monthNumber+" "+" / "+calendar.getYear());
+                Global.date_picker = calendar.getDate()+"-"+monthNumber+"-"+calendar.getYear();
                 notifyDataSetChanged();
             }
         });

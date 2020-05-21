@@ -31,4 +31,12 @@ public class Global {
 
     /*<------------------------------------------- Saloon Later list --------------------------------------------------------->*/
     public static final String Saloon_items_Details = "http://bizhawkzdemo.com/salon_app/salon_description.php";
+
+
+
+
+
+    /*<------------------------------------------- Global Variable --------------------------------------------------------->*/
+    public static String date_picker;
+    public static String timer_picker;
 }

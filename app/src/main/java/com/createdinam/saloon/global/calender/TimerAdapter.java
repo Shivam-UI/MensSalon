@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.createdinam.saloon.R;
+import com.createdinam.saloon.global.Global;
+
 import java.util.List;
 
 public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerHolder> {
@@ -48,7 +50,9 @@ public class TimerAdapter extends RecyclerView.Adapter<TimerAdapter.TimerHolder>
             @Override
             public void onClick(View v) {
                 selectedPosition = position;
+                Global.timer_picker="";
                 Log.d("selected_time",""+mTimer.get(selectedPosition).getHrs()+" : "+mTimer.get(selectedPosition).getAM_PM());
+                Global.timer_picker = mTimer.get(selectedPosition).getHrs()+":00 "+mTimer.get(selectedPosition).getAM_PM();
                 notifyDataSetChanged();
             }
         });

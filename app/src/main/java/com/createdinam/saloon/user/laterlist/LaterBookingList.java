@@ -45,6 +45,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 import static com.createdinam.saloon.global.Global.MY_PREFS_NAME;
 
 public class LaterBookingList extends AppCompatActivity implements View.OnClickListener {
@@ -82,6 +84,7 @@ public class LaterBookingList extends AppCompatActivity implements View.OnClickL
         book_later_list = findViewById(R.id.book_later_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         book_later_list.setLayoutManager(layoutManager);
+        book_later_list.setItemAnimator(new SlideInUpAnimator());
         book_later_list.setHasFixedSize(true);
         // init other layout component
         back_button = findViewById(R.id.back_button);
@@ -166,7 +169,7 @@ public class LaterBookingList extends AppCompatActivity implements View.OnClickL
                         int start1 = i * maxLogSize;
                         int end = (i + 1) * maxLogSize;
                         end = end > response.length() ? response.length() : end;
-                        Log.d("response", response.toString());
+                        //Log.d("response", response.toString());
                     }
                     if (obj.getString("status").matches("true")) {
                         JSONArray homelist = obj.getJSONArray("data");

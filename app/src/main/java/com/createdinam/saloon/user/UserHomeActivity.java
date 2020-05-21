@@ -61,6 +61,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 import static android.content.Context.MODE_PRIVATE;
 import static android.widget.LinearLayout.HORIZONTAL;
 import static android.widget.LinearLayout.VERTICAL;
@@ -132,6 +134,8 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
         GridLayoutManager lManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         hot_salon_list.setLayoutManager(lManager);
         home_list_rey.setLayoutManager(layoutManager);
+        hot_salon_list.setItemAnimator(new SlideInUpAnimator());
+        home_list_rey.setItemAnimator(new SlideInUpAnimator());
         if (InitFunction.getInstance(getApplicationContext()).isNetworkAvaliable(UserHomeActivity.this)) {
             customLoader.startLoadingDailog();
             getUserCurrentLocation();
