@@ -1,5 +1,6 @@
 package com.createdinam.saloon.user.nowlist.model;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -29,13 +30,15 @@ import java.util.ArrayList;
 public class NowPagerSlider extends PagerAdapter {
     LayoutInflater mInflater;
     ArrayList<String> imageList;
+    Activity mActivity;
     Context mContext;
     AlertDialog mAlertDialog;
     Dialog mdialog;
 
-    public NowPagerSlider(ArrayList<String> imageList, Context mContext) {
+    public NowPagerSlider(ArrayList<String> imageList, Context mContext,Activity activity) {
         this.imageList = imageList;
         this.mContext = mContext;
+        this.mActivity = activity;
     }
 
     @Override
@@ -96,7 +99,7 @@ public class NowPagerSlider extends PagerAdapter {
                 // assign list to view
                 mdialog.setCancelable(false);
                 // show the dialog
-                mdialog.show();
+               // mdialog.show();
                 Log.d("slider_image", "->" + imageList.get(position));
             }
         });

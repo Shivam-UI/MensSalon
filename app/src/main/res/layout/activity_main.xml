@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="?attr/actionBarSize"
                 tools:ignore="MissingConstraints"
-                tools:itemCount="1"/>
+                tools:itemCount="2"/>
         </LinearLayout>
 
         <LinearLayout

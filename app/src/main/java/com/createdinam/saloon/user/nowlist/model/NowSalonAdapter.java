@@ -1,12 +1,15 @@
 package com.createdinam.saloon.user.nowlist.model;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +17,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.createdinam.saloon.R;
 import com.createdinam.saloon.user.HomeListModel;
+import com.createdinam.saloon.user.itemdetails.SaloonItensDetailsActivity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,10 +31,17 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
     NowPagerSlider pagerSlider;
     ArrayList<NowModel> mNowList = new ArrayList<NowModel>();
     Context mContext;
+    Activity activity;
+    // set time init
+    SimpleDateFormat simpleDateFormat;
+    String time;
+    Calendar calander;
+
     Timer timer;
-    public NowSalonAdapter(ArrayList<NowModel> mNowList, Context mContext) {
+    public NowSalonAdapter(ArrayList<NowModel> mNowList, Context mContext,Activity mActivity) {
         this.mNowList = mNowList;
         this.mContext = mContext;
+        this.activity = mActivity;
     }
 
     @NonNull
@@ -37,7 +52,7 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NowListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final NowListHolder holder, final int position) {
         // get data from list
         String id = mNowList.get(position).getSalon_id();
         String sal_name = mNowList.get(position).getSalon_name();
@@ -62,11 +77,11 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
         final ArrayList<String> ListImagesSlider = new ArrayList<String>();
         for (int i = 0;i< images.length;i++){
             url = images[i].replaceAll("\\s","%20");
-            Log.d("URL",""+url);
+            //Log.d("URL",""+url);
             ListImagesSlider.add(url);
         }
         // set to pager view
-        pagerSlider = new NowPagerSlider(ListImagesSlider,mContext);
+        pagerSlider = new NowPagerSlider(ListImagesSlider,mContext,activity);
         holder.mNow_slider.setAdapter(pagerSlider);
 
         TimerTask timerTask = new TimerTask() {
@@ -89,6 +104,30 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
         holder.now_sal_distance.setText(sal_distance);
         holder.nw_sal_address.setText(sal_address);
         holder.nw_sal_rating.setRating(Float.parseFloat(sal_rating));
+
+        // set selected click listener
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // set current time
+                calander = Calendar.getInstance();
+                simpleDateFormat = new SimpleDateFormat("hh:mm a");
+                time = simpleDateFormat.format(calander.getTime());
+                onTimeSet(time);
+
+                Intent detailsView = new Intent(mContext.getApplicationContext(), SaloonItensDetailsActivity.class);
+                detailsView.putExtra("salon_id",""+mNowList.get(position).getSalon_id());
+                detailsView.putExtra("lat",""+mNowList.get(position).getLatitude());
+                detailsView.putExtra("long",""+mNowList.get(position).getLongitude());
+                detailsView.putExtra("time",""+time);
+                detailsView.putExtra("flag","now");
+                detailsView.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(detailsView);
+                //((Activity)(mContext)).finish();
+                // clear time
+                time = "";
+            }
+        });
     }
 
     @Override
@@ -109,5 +148,13 @@ public class NowSalonAdapter extends RecyclerView.Adapter<NowSalonAdapter.NowLis
             nw_sal_discount = itemView.findViewById(R.id.nw_sal_discount);
             mNow_slider = itemView.findViewById(R.id.now_slider);
         }
+    }
+
+    public void onTimeSet(String mTime) {
+
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.US);//First argument will be the format
+        //String timeFormat = simpleDateFormat.format(mTime);
+        Log.d("time is",mTime);
+
     }
 }

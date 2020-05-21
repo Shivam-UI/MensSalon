@@ -105,7 +105,7 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
         txt_now.setText("Book Now");
         txt_later.setText("Book Later");
         if (InitFunction.getInstance(getApplicationContext()).isNetworkAvaliable(NowListActivity.this)) {
-            //customLoader.startLoadingDailog();
+            customLoader.startLoadingDailog();
             setNowListView();
         } else {
             Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
@@ -184,7 +184,7 @@ public class NowListActivity extends AppCompatActivity implements View.OnClickLi
                             nowModel.setFeatured_flag(listObj.getString("featured_flag"));
                             NowListDB.add(nowModel);
                         }
-                        ry_now_list_items.setAdapter(new NowSalonAdapter(NowListDB,getApplicationContext()));
+                        ry_now_list_items.setAdapter(new NowSalonAdapter(NowListDB,getApplicationContext(),NowListActivity.this));
                         customLoader.stopLoadingDailog();
                     }else{
                         Toast.makeText(NowListActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();

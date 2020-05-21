@@ -1,5 +1,6 @@
 package com.createdinam.saloon.user.laterlist.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -17,7 +18,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.createdinam.saloon.R;
 import com.createdinam.saloon.user.itemdetails.SaloonItensDetailsActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,7 +29,10 @@ public class LaterSalonAdapter extends RecyclerView.Adapter<LaterSalonAdapter.La
     ArrayList<LaterModel> mLaterList = new ArrayList<LaterModel>();
     Context mContext;
     Timer timer;
-
+    // set time init
+    SimpleDateFormat simpleDateFormat;
+    String time;
+    Calendar calander;
     public LaterSalonAdapter(ArrayList<LaterModel> mNowList, Context mContext) {
         this.mLaterList = mNowList;
         this.mContext = mContext;
@@ -98,12 +104,20 @@ public class LaterSalonAdapter extends RecyclerView.Adapter<LaterSalonAdapter.La
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // set current time
+                calander = Calendar.getInstance();
+                simpleDateFormat = new SimpleDateFormat("hh:mm a");
+                time = simpleDateFormat.format(calander.getTime());
+                onTimeSet(time);
                 Intent detailsView = new Intent(mContext.getApplicationContext(), SaloonItensDetailsActivity.class);
                 detailsView.putExtra("salon_id",""+mLaterList.get(position).getSalon_id());
                 detailsView.putExtra("lat",""+mLaterList.get(position).getLatitude());
                 detailsView.putExtra("long",""+mLaterList.get(position).getLongitude());
+                detailsView.putExtra("time",""+time);
+                detailsView.putExtra("flag","later");
                 detailsView.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(detailsView);
+                //((Activity)(mContext)).finish();
             }
         });
     }
@@ -126,5 +140,13 @@ public class LaterSalonAdapter extends RecyclerView.Adapter<LaterSalonAdapter.La
             later_sal_address = itemView.findViewById(R.id.later_sal_address);
             later_sal_discount = itemView.findViewById(R.id.later_sal_discount);
         }
+    }
+
+    public void onTimeSet(String mTime) {
+
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.US);//First argument will be the format
+        //String timeFormat = simpleDateFormat.format(mTime);
+        Log.d("time is",mTime);
+
     }
 }

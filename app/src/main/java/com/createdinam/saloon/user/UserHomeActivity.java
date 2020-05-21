@@ -129,7 +129,8 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
         btn_lay_list.setOnClickListener(this);
         btn_lay_later.setOnClickListener(this);
         // init hot list
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        LinearLayoutManager HlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL,false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         GridLayoutManager lManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         hot_salon_list.setLayoutManager(lManager);
@@ -244,7 +245,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
                             salonModel.setDiscount(listObj.getString("discount"));
                             hot_list.add(salonModel);
                         }
-                        hot_salon_list.setAdapter(new HotListAdapter(hot_list,UserHomeActivity.this));
+                        hot_salon_list.setAdapter(new HotListAdapter(hot_list,UserHomeActivity.this,UserHomeActivity.this));
                         autoScroll();
                         customLoader.stopLoadingDailog();
                     }

@@ -14,7 +14,7 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginBottom="?attr/actionBarSize"
         android:orientation="vertical"
-        android:weightSum="4">
+        android:weightSum="3">
 
         <RelativeLayout
             android:id="@+id/details_container"
@@ -53,9 +53,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:textSize="@dimen/text_size_15sp"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_15sp" />
 
                     <TextView
                         android:id="@+id/salon_des_address"
@@ -65,9 +65,9 @@
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_bold"
                         android:lines="3"
-                        android:textSize="@dimen/text_size_14sp"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/second_text_color_bk" />
+                        android:textColor="@color/second_text_color_bk"
+                        android:textSize="@dimen/text_size_14sp" />
 
                     <TextView
                         android:id="@+id/salon_des_time"
@@ -76,9 +76,9 @@
                         android:layout_below="@+id/salon_des_address"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:textSize="@dimen/text_size_14sp"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_14sp" />
 
                     <TextView
                         android:id="@+id/salon_des_location"
@@ -86,9 +86,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/salon_des_time"
                         android:fontFamily="@font/montserrat_bold"
-                        android:textSize="@dimen/text_size_14sp"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_14sp" />
 
                 </RelativeLayout>
 
@@ -112,12 +112,27 @@
                 android:textSize="@dimen/text_size_14sp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/salon_description"
                 android:id="@+id/category_list_holder"
-                android:clipToPadding="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/salon_description"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="false"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/description_container" >
+
+            <GridView
+                android:id="@+id/category_items_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:numColumns="3" />
 
         </RelativeLayout>
 

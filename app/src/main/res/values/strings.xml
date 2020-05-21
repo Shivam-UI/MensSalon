@@ -6,8 +6,8 @@
     <string name="submit_btn">Confirm</string>
     <string name="submit_resend_otp">Resend OTP</string>
     <string name="about_us">Awesome Pick For You</string>
-    <string name="bottom_now">now</string>
-    <string name="bottom_later">later</string>
+    <string name="bottom_now">Book Now</string>
+    <string name="bottom_later">Book Later</string>
     <string name="txt_profile">Profile</string>
     <string name="txt_history">History</string>
     <string name="txt_talk_to_us">Talk to us</string>

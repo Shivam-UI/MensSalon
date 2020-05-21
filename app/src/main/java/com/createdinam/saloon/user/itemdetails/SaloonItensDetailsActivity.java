@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -40,9 +41,11 @@ import com.createdinam.saloon.user.UserHomeActivity;
 import com.createdinam.saloon.user.itemdetails.model.CategoryAdapter;
 import com.createdinam.saloon.user.itemdetails.model.CategoryModel;
 import com.createdinam.saloon.user.itemdetails.model.DescriptionModel;
+import com.createdinam.saloon.user.itemdetails.model.GridViewAdapter;
 import com.createdinam.saloon.user.laterlist.LaterBookingList;
 import com.createdinam.saloon.user.laterlist.model.LaterModel;
 import com.createdinam.saloon.user.laterlist.model.LaterSalonAdapter;
+import com.createdinam.saloon.user.nowlist.NowListActivity;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -61,14 +64,17 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.createdinam.saloon.global.Global.MY_PREFS_NAME;
 
 public class SaloonItensDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-    private static String USER_ID,SALON_ID = "",SAL_LAT="",SAL_LONG="",VIDEO_URI="";
+    private static String USER_ID,SALON_ID = "",SAL_LAT="",SAL_LONG="",VIDEO_URI="",FLAG="",TIME="";
     private static CustomLoader customLoader;
     SharedPreferences.Editor editor;
     SharedPreferences prefs;
@@ -80,6 +86,9 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
     TextView logo_imageView, txt_later, txt_now;
     // recycler view items
     RecyclerView category_list_holder;
+    GridView category_items_grid;
+    // SimpleDateFormat
+    SimpleDateFormat simpleDateFormat;
     // save data to ArrayList
     ArrayList<CategoryModel> mCategoryData = new ArrayList<CategoryModel>();
     // enable view
@@ -94,6 +103,8 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
         SALON_ID = intent.getStringExtra("salon_id");
         SAL_LAT = intent.getStringExtra("lat");
         SAL_LONG = intent.getStringExtra("long");
+        FLAG = intent.getStringExtra("flag");
+        TIME = intent.getStringExtra("time");
         Log.d("we_found","-> "+SALON_ID+" - "+SAL_LAT+" - "+SAL_LONG);
         prefs = getApplicationContext().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         editor = prefs.edit();
@@ -108,7 +119,7 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
         }
         USER_ID = prefs.getString("user_id", "");
         // inti list
-
+        simpleDateFormat = new SimpleDateFormat("hh:mm a");
         // init items
         salon_des_name = findViewById(R.id.salon_des_name);
         salon_des_address = findViewById(R.id.salon_des_address);
@@ -117,7 +128,9 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
         salon_description = findViewById(R.id.salon_description);
         desc_vide_details = findViewById(R.id.desc_vide_details);
         category_list_holder = findViewById(R.id.category_list_holder);
-        category_list_holder.setLayoutManager(new GridLayoutManager(this, 3));
+        category_items_grid = findViewById(R.id.category_items_grid);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 3);
+        category_list_holder.setLayoutManager(mLayoutManager);
         // init other layout component
         back_button = findViewById(R.id.back_button);
         btn_lay_now = findViewById(R.id.btn_lay_now);
@@ -162,18 +175,28 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
                         int start1 = i * maxLogSize;
                         int end = (i + 1) * maxLogSize;
                         end = end > response.length() ? response.length() : end;
-                        //Log.d("response", response.toString());
+                        Log.d("response", response.toString());
                     }
                     if (obj.getString("status").matches("true")) {
                         JSONObject objData = obj.getJSONObject("data");
                         JSONObject detailslist = objData.getJSONObject("description");
                         Log.d("size", "" + detailslist.length());
+                        // increase time by 1hr
+                        Date date = simpleDateFormat.parse(TIME);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.HOUR, 1);
+                        // get time in 12hrs
+                        String timenow = simpleDateFormat.format(calendar.getTime());
                         // set Data to view
                         salon_des_name.setText(detailslist.getString("salon_name"));
                         salon_des_address.setText(detailslist.getString("address"));
-                        salon_des_time.setText(detailslist.getString("availability"));
+                        //salon_des_time.setText(detailslist.getString("availability"));
+                        salon_des_time.setText(timenow);
                         salon_des_location.setText(detailslist.getString("distance"));
                         salon_description.setText(detailslist.getString("salon_description"));
+                        // clear time
+                        TIME = "";
                         // set Player
                         setupMediaPlayer(desc_vide_details,detailslist.getString("image"));
                         // set category
@@ -189,20 +212,22 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
                             mCategoryData.add(categoryModel);
                         }
                         category_list_holder.setAdapter(new CategoryAdapter(mCategoryData,SaloonItensDetailsActivity.this));
+                        // set grid view
+                        category_items_grid.setAdapter(new GridViewAdapter(mCategoryData,SaloonItensDetailsActivity.this));
                         customLoader.stopLoadingDailog();
                     } else {
-                        Log.d("error", "No Data Found");
+                        Log.d("error-1", "No Data Found");
                         customLoader.stopLoadingDailog();
                     }
                 } catch (Exception ex) {
-                    Log.d("error", ex.getMessage());
+                    Log.d("error-2", ex.getMessage());
                     customLoader.stopLoadingDailog();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error", "onResponse: " + error.getMessage());
+                Log.d("error-3", "onResponse: " + error.getMessage());
                 customLoader.stopLoadingDailog();
             }
         }) {
@@ -274,7 +299,14 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(SaloonItensDetailsActivity.this,LaterBookingList.class));
-        finish();
+        if (FLAG.trim().toLowerCase().matches("now")){
+            startActivity(new Intent(SaloonItensDetailsActivity.this, NowListActivity.class));
+            FLAG="";
+            finish();
+        }else if(FLAG.trim().toLowerCase().matches("later")){
+            startActivity(new Intent(SaloonItensDetailsActivity.this,LaterBookingList.class));
+            FLAG="";
+            finish();
+        }
     }
 }
