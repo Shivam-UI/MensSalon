@@ -7,6 +7,15 @@ public class SalonModel {
     private String salonName;
     private String image;
     private String discount;
+    private String image_popup;
+
+    public String getImage_popup() {
+        return image_popup;
+    }
+
+    public void setImage_popup(String image_popup) {
+        this.image_popup = image_popup;
+    }
 
     public String getSalonId() {
         return salonId;

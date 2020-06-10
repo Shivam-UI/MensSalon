@@ -231,7 +231,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
                         int start1 = i * maxLogSize;
                         int end = (i + 1) * maxLogSize;
                         end = end > response.length() ? response.length() : end;
-                        //Log.d("response", response.toString());
+                        Log.d("response", response.toString());
                     }
                     if (obj.getString("status").matches("true")) {
                         JSONArray hotlist = obj.getJSONArray("data");
@@ -242,6 +242,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
                             salonModel.setSalonUniqueId(listObj.getString("salon_unique_id"));
                             salonModel.setSalonName(listObj.getString("salon_name"));
                             salonModel.setImage(listObj.getString("image"));
+                            salonModel.setImage_popup(listObj.getString("image_popup"));
                             salonModel.setDiscount(listObj.getString("discount"));
                             hot_list.add(salonModel);
                         }
@@ -299,9 +300,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setMapView() {
-        //Toast.makeText(this, "Map", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(UserHomeActivity.this, SaloonItensDetailsActivity.class));
-        finish();
+        Toast.makeText(this, "Map", Toast.LENGTH_SHORT).show();
     }
 
     private void setListView() {
@@ -383,7 +382,7 @@ public class UserHomeActivity extends AppCompatActivity implements View.OnClickL
                     handler.postDelayed(this, speedScroll);
                 }
                 if (count == hot_salon_list.getAdapter().getItemCount()) {
-                    //hot_salon_list.setLayoutManager(new LinearLayoutManagerWithSmoothScroller(UserHomeActivity.this,0,false));
+                    hot_salon_list.setLayoutManager(new LinearLayoutManagerWithSmoothScroller(UserHomeActivity.this,0,false));
                     hot_salon_list.smoothScrollToPosition(++count);
                     handler.postDelayed(this, speedScroll);
                 }

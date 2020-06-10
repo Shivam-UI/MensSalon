@@ -46,6 +46,7 @@ import com.createdinam.saloon.user.laterlist.LaterBookingList;
 import com.createdinam.saloon.user.laterlist.model.LaterModel;
 import com.createdinam.saloon.user.laterlist.model.LaterSalonAdapter;
 import com.createdinam.saloon.user.nowlist.NowListActivity;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -55,11 +56,15 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -94,7 +99,8 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
     // enable view
     TextView salon_des_name,salon_des_address,salon_des_time,salon_des_location,salon_description;
     SimpleExoPlayerView desc_vide_details;
-    SimpleExoPlayer mSimpleExoPlayer;
+    PlayerView playerView;
+    SimpleExoPlayer exoPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +132,7 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
         salon_des_time = findViewById(R.id.salon_des_time);
         salon_des_location = findViewById(R.id.salon_des_location);
         salon_description = findViewById(R.id.salon_description);
+        playerView = findViewById(R.id.desc_vide_details);
         desc_vide_details = findViewById(R.id.desc_vide_details);
         category_list_holder = findViewById(R.id.category_list_holder);
         category_items_grid = findViewById(R.id.category_items_grid);
@@ -198,7 +205,19 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
                         // clear time
                         TIME = "";
                         // set Player
-                        setupMediaPlayer(desc_vide_details,detailslist.getString("image"));
+                        TrackSelector trackSelector = new DefaultTrackSelector();
+                        exoPlayer = ExoPlayerFactory.newSimpleInstance(SaloonItensDetailsActivity.this, trackSelector);
+                        playerView.setPlayer(exoPlayer);
+                        exoPlayer.setPlayWhenReady(true);
+                        exoPlayer.setVideoScalingMode(C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
+                        if (exoPlayer.isLoading()){
+                            Log.d("","Loading..");
+                        }else{
+                            Log.d("","Playing..");
+                        }
+                        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(SaloonItensDetailsActivity.this, Util.getUserAgent(SaloonItensDetailsActivity.this, "VideoPlayer"));
+                        MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(detailslist.getString("image")));
+                        exoPlayer.prepare(videoSource);
                         // set category
                         JSONArray categoryList = objData.getJSONArray("categories");
                         for(int i = 0; i < categoryList.length();i++){
@@ -242,19 +261,6 @@ public class SaloonItensDetailsActivity extends AppCompatActivity implements Vie
             }
         };
         requestQueue.add(nowListRequest);
-    }
-
-    private void setupMediaPlayer(SimpleExoPlayerView desc_vide_details,String url) {
-        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-        TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
-        mSimpleExoPlayer= ExoPlayerFactory.newSimpleInstance(this,trackSelector);
-        Uri mURI = Uri.parse(url);
-        DefaultHttpDataSourceFactory defaultHttpDataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
-        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-        MediaSource mediaSource = new ExtractorMediaSource(mURI,defaultHttpDataSourceFactory,extractorsFactory,null,null);
-        desc_vide_details.setPlayer(mSimpleExoPlayer);
-        mSimpleExoPlayer.prepare(mediaSource);
-        mSimpleExoPlayer.setPlayWhenReady(true);
     }
 
     @Override

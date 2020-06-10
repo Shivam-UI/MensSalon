@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.createdinam.saloon.R;
+import com.google.android.exoplayer2.ui.PlayerView;
 
 import java.util.ArrayList;
 
@@ -37,6 +38,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CatIte
     public void onBindViewHolder(@NonNull CatItemHolder holder, int position) {
         String name = categoryModels.get(position).getName();
         String ImagesUrl = categoryModels.get(position).getCategory_image();
+        String VideoURI = categoryModels.get(position).getCategory_image();
         // set data to view
         holder.category_name.setText(name);
         Glide.with(holder.category_item_images.getContext()).load(ImagesUrl).error(R.drawable.splash_background_crop).into(holder.category_item_images);
@@ -54,6 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CatIte
             super(itemView);
             category_item_images = itemView.findViewById(R.id.category_item_images);
             category_name = itemView.findViewById(R.id.category_name);
+
         }
     }
 }

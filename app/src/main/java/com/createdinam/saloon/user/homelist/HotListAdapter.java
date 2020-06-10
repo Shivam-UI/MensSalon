@@ -53,13 +53,14 @@ public class HotListAdapter extends RecyclerView.Adapter<HotListAdapter.HotListH
         //holder.list_name.setText(name);
         Log.d("image","added");
         Glide.with(holder.list_image.getContext()).load(img_url).error(R.drawable.splash_background_crop).into(holder.list_image);
+        Glide.with(holder.hot_list_image_two.getContext()).load(img_url).error(R.drawable.splash_background_crop).into(holder.hot_list_image_two);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
                 LayoutInflater inflater = parentActivity.getLayoutInflater();
-                //builder.setView(inflater.inflate(R.layout.custom_alert_dailog,null));
+                builder.setView(inflater.inflate(R.layout.short_description_popup,null));
                 builder.setCancelable(true);
                 builder.setInverseBackgroundForced(true);
                 builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
@@ -76,7 +77,6 @@ public class HotListAdapter extends RecyclerView.Adapter<HotListAdapter.HotListH
                         dialog.dismiss();
                     }
                 });
-
                 alertDialog = builder.create();
                 alertDialog.setTitle(name);
                 alertDialog.setMessage(name + discount);
@@ -92,13 +92,13 @@ public class HotListAdapter extends RecyclerView.Adapter<HotListAdapter.HotListH
     }
 
     class HotListHolder extends RecyclerView.ViewHolder {
-        ImageView list_image;
+        ImageView list_image,hot_list_image_two;
         //TextView list_name;
 
         public HotListHolder(@NonNull View itemView) {
             super(itemView);
             list_image = itemView.findViewById(R.id.hot_list_image);
-            //list_name = itemView.findViewById(R.id.hot_list_name);
+            hot_list_image_two = itemView.findViewById(R.id.hot_list_image_two);
         }
     }
 }
